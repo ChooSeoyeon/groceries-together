@@ -33,10 +33,9 @@ const Index = () => {
       toast('리스트로 복원했어요', { icon: '↩️' });
     } else {
       checkItem(item.id);
-      toast(`${item.name} 완료!`, {
-        icon: '✅',
+      toast(`${item.name} 완료`, {
         action: {
-          label: '↩',
+          label: '↩︎',
           onClick: () => uncheckItem(item.id),
         },
         duration: 4000,
