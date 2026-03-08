@@ -80,7 +80,6 @@ export function AddItemDrawer({ onAdd, open: controlledOpen, onOpenChange, prefi
                 </button>
               )}
             </div>
-            />
           </div>
 
           <div>
