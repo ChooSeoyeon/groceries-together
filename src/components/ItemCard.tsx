@@ -5,9 +5,10 @@ interface ItemCardProps {
   item: ShoppingItem;
   onLongPress: (item: ShoppingItem) => void;
   onShortPress: (item: ShoppingItem) => void;
+  disabled?: boolean;
 }
 
-export function ItemCard({ item, onLongPress, onShortPress }: ItemCardProps) {
+export function ItemCard({ item, onLongPress, onShortPress, disabled }: ItemCardProps) {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isLongPress = useRef(false);
 
