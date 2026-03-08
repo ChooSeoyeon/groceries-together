@@ -38,8 +38,8 @@ export function SearchBar({ items, onUncheck, onAdd, onLongPress }: SearchBarPro
     setAddDrawerOpen(true);
   };
 
-  const handleAdd = (name: string, store: Store, quantity: number, unit: string, urgency: Urgency) => {
-    onAdd(name, store, quantity, unit, urgency);
+  const handleAdd = (name: string, store: Store, quantity: number, unit: string, urgency: Urgency, memo?: string) => {
+    onAdd(name, store, quantity, unit, urgency, memo);
     setQuery('');
     setFocused(false);
     setAddDrawerOpen(false);
