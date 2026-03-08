@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { STORES, Store } from '@/types/shopping';
 import { useShoppingList } from '@/hooks/useShoppingList';
 import { ItemCard } from '@/components/ItemCard';
 import { ItemDetailDrawer } from '@/components/ItemDetailDrawer';
 import { AddItemDrawer } from '@/components/AddItemDrawer';
 import { ShoppingItem, STORE_BADGE_CLASS } from '@/types/shopping';
-import { History } from 'lucide-react';
+import { History, Undo2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 const Index = () => {
   const { items, activeItems, historyItems, addItem, checkItem, uncheckItem, deleteItem, updateItem } = useShoppingList();
@@ -29,8 +30,17 @@ const Index = () => {
   const handleShortPress = (item: ShoppingItem) => {
     if (item.inCart) {
       uncheckItem(item.id);
+      toast('리스트로 복원했어요', { icon: '↩️' });
     } else {
       checkItem(item.id);
+      toast(`${item.name} 완료!`, {
+        icon: '✅',
+        action: {
+          label: '되돌리기',
+          onClick: () => uncheckItem(item.id),
+        },
+        duration: 4000,
+      });
     }
   };
 
