@@ -62,6 +62,19 @@ export function ItemDetailDrawer({ item, open, onClose, onUpdate, onDelete, onCh
               <Button variant="outline" size="icon" className="h-8 w-8 rounded-full" onClick={() => setQuantity(quantity + 1)}>
                 <Plus className="w-3.5 h-3.5" />
               </Button>
+              <div className="flex gap-1 ml-1 flex-wrap">
+                {UNITS.map(u => (
+                  <button
+                    key={u}
+                    onClick={() => setUnit(u)}
+                    className={`px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
+                      unit === u ? 'bg-foreground text-background' : 'bg-secondary text-secondary-foreground'
+                    }`}
+                  >
+                    {u}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
