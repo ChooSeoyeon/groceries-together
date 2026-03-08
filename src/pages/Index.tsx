@@ -125,12 +125,13 @@ const Index = () => {
         onUncheck={uncheckItem}
       />
 
-      {/* FAB */}
-      <div className="sticky bottom-5 z-50 flex justify-end pr-4 pointer-events-none">
-        <div className="pointer-events-auto">
-          <AddItemDrawer onAdd={addItem} />
-        </div>
-      </div>
+      {/* Search Bar */}
+      <SearchBar
+        items={items}
+        onUncheck={uncheckItem}
+        onAdd={addItem}
+        onLongPress={handleLongPress}
+      />
     </div>
   );
 };
