@@ -1,8 +1,8 @@
 import { ShoppingItem } from '@/types/shopping';
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 
-// Global flag to prevent short press on neighboring items after a long press
-let longPressJustFired = false;
+// Global timestamp of last long press to prevent ghost taps on shifted items
+let lastLongPressTime = 0;
 
 interface ItemCardProps {
   item: ShoppingItem;
@@ -14,17 +14,18 @@ export function ItemCard({ item, onLongPress, onShortPress }: ItemCardProps) {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isLongPress = useRef(false);
   const startPos = useRef({ x: 0, y: 0 });
+  const itemIdAtStart = useRef(item.id);
 
+  // Track which item ID we started interacting with
   const handleStart = useCallback((clientX: number, clientY: number) => {
     isLongPress.current = false;
+    itemIdAtStart.current = item.id;
     startPos.current = { x: clientX, y: clientY };
     timerRef.current = setTimeout(() => {
       isLongPress.current = true;
-      longPressJustFired = true;
+      lastLongPressTime = Date.now();
       onLongPress(item);
       if (navigator.vibrate) navigator.vibrate(50);
-      // Reset global flag after a short delay
-      setTimeout(() => { longPressJustFired = false; }, 300);
     }, 500);
   }, [item, onLongPress]);
 
@@ -36,12 +37,27 @@ export function ItemCard({ item, onLongPress, onShortPress }: ItemCardProps) {
     }
   }, []);
 
-  const handleEnd = useCallback(() => {
+  const handleEnd = useCallback((e: React.TouchEvent | React.MouseEvent) => {
     if (timerRef.current) clearTimeout(timerRef.current);
-    if (!isLongPress.current && !longPressJustFired) {
+    
+    // Block short press if:
+    // 1. This was a long press
+    // 2. A long press happened recently (item shifted into this position)
+    // 3. The item ID changed (meaning this card now shows a different item)
+    const recentLongPress = Date.now() - lastLongPressTime < 500;
+    
+    if (!isLongPress.current && !recentLongPress) {
       onShortPress(item);
     }
+    
+    e.preventDefault();
   }, [item, onShortPress]);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   const urgencyClasses = item.urgency === 'urgent'
     ? 'bg-urgent-card text-urgent-card-foreground'
@@ -52,7 +68,7 @@ export function ItemCard({ item, onLongPress, onShortPress }: ItemCardProps) {
       onTouchStart={(e) => handleStart(e.touches[0].clientX, e.touches[0].clientY)}
       onTouchMove={(e) => handleMove(e.touches[0].clientX, e.touches[0].clientY)}
       onTouchEnd={handleEnd}
-      onMouseDown={(e) => handleStart(e.clientX, e.clientY)}
+      onMouseDown={(e) => { e.preventDefault(); handleStart(e.clientX, e.clientY); }}
       onMouseMove={(e) => { if (e.buttons) handleMove(e.clientX, e.clientY); }}
       onMouseUp={handleEnd}
       className={`relative flex flex-col items-center justify-center aspect-square rounded-xl
