@@ -34,13 +34,13 @@ export function ItemDetailDrawer({ item, open, onClose, onUpdate, onDelete, onCh
 
   if (!item) return null;
 
-  const handleSave = () => {
+  const handleClose = () => {
     onUpdate(item.id, { name, quantity, unit, store, urgency });
     onClose();
   };
 
   return (
-    <Drawer open={open} onOpenChange={(o) => !o && onClose()}>
+    <Drawer open={open} onOpenChange={(o) => !o && handleClose()}>
       <DrawerContent className="max-w-md mx-auto px-4 pb-6">
         <DrawerHeader className="px-0 pb-2">
           <DrawerTitle className="text-left text-sm">물건 상세</DrawerTitle>
