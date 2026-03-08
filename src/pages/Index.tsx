@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState } from 'react';
 import { STORES, Store } from '@/types/shopping';
 import { useShoppingList } from '@/hooks/useShoppingList';
 import { ItemCard } from '@/components/ItemCard';
