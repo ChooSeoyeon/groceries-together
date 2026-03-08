@@ -82,7 +82,7 @@ const Index = () => {
       </header>
 
       {/* Shopping List grouped by store */}
-      <section className={`px-4 mt-2 ${drawerOpen ? 'pointer-events-none' : ''}`}>
+      <section className="px-4 mt-2">
         {groupedActive.length === 0 ? (
           <div className="text-center py-16 text-muted-foreground text-sm">
             리스트가 비어있어요 ✨<br />+ 버튼으로 물건을 추가해보세요
