@@ -51,6 +51,8 @@
     --relaxed-foreground: 0 0% 100%;
     --relaxed-card: 200 40% 88%;
     --relaxed-card-foreground: 200 30% 30%;
+    --history-card: 45 70% 80%;
+    --history-card-foreground: 40 40% 25%;
 
     --store-turk: 350 60% 50%;
     --store-dmart: 270 50% 50%;
