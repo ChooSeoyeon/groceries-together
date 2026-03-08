@@ -26,4 +26,4 @@ export const STORE_BADGE_CLASS: Record<Store, string> = {
   '아무데나': 'store-badge-any',
 };
 
-export const UNITS = ['개', '팩', '병', '봉', 'kg', 'g', 'L', 'ml'];
+export const UNITS = ['개', 'kg'];
