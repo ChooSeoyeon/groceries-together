@@ -45,7 +45,7 @@ const Index = () => {
       <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-lg pt-safe">
         <div className="px-4 pt-3 pb-2">
           <h1 className="text-lg font-bold">🛒 우리집 장보기</h1>
-          <p className="text-[10px] text-muted-foreground">짧게 탭 = 상세 · 길게 꾹 = 완료</p>
+          <p className="text-[10px] text-muted-foreground">짧게 탭 = 완료 · 길게 꾹 = 상세</p>
         </div>
       </header>
 
