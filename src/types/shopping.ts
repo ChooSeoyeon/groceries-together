@@ -9,6 +9,7 @@ export interface ShoppingItem {
   quantity: number;
   unit: string;
   urgency: Urgency;
+  memo?: string;
   inCart: boolean; // false = shopping list, true = history
   checkedAt?: number; // timestamp when moved to history
   createdAt: number;
