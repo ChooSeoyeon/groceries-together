@@ -61,6 +61,11 @@ export function ItemCard({ item, onLongPress, onShortPress, disabled }: ItemCard
       <span className="text-[10px] opacity-60 mt-0.5">
         {item.quantity}{item.unit}
       </span>
+      {item.memo && (
+        <span className="text-[8px] opacity-50 mt-0.5 px-1 text-center line-clamp-1 leading-tight">
+          {item.memo}
+        </span>
+      )}
     </div>
   );
 }
