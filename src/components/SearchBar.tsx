@@ -26,13 +26,11 @@ export function SearchBar({ items, onUncheck, onAdd, onLongPress }: SearchBarPro
     : [];
 
   const handleResultPress = (item: ShoppingItem) => {
-    if (item.inCart) {
-      onUncheck(item.id);
-      setQuery('');
-      setFocused(false);
-      inputRef.current?.blur();
-    }
-    // active items are disabled, do nothing
+    if (!item.inCart) return; // active items: short press does nothing
+    onUncheck(item.id);
+    setQuery('');
+    setFocused(false);
+    inputRef.current?.blur();
   };
 
   const handleCreateNew = () => {
@@ -67,7 +65,7 @@ export function SearchBar({ items, onUncheck, onAdd, onLongPress }: SearchBarPro
         <div className="fixed bottom-16 left-0 right-0 z-50 max-w-md mx-auto px-4 pb-2 max-h-[60vh] overflow-y-auto">
           <div className="grid grid-cols-4 gap-1.5">
             {results.map(item => (
-              <div key={item.id} className={!item.inCart ? 'relative overflow-hidden rounded-xl pointer-events-none' : ''}>
+              <div key={item.id} className={!item.inCart ? 'relative overflow-hidden rounded-xl' : ''}>
                 <ItemCard
                   item={item}
                   onShortPress={handleResultPress}
