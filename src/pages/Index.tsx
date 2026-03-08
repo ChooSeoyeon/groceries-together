@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState } from 'react';
 import { STORES, Store } from '@/types/shopping';
 import { useShoppingList } from '@/hooks/useShoppingList';
 import { ItemCard } from '@/components/ItemCard';
@@ -24,11 +24,6 @@ const Index = () => {
   const { items, activeItems, historyItems, addItem, checkItem, uncheckItem, deleteItem, updateItem } = useShoppingList();
   const [detailItem, setDetailItem] = useState<ShoppingItem | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const drawerClosedAt = useRef(0);
-
-  const isDrawerCooldown = useCallback(() => {
-    return Date.now() - drawerClosedAt.current < 300;
-  }, []);
 
   // Group active items by store
   const groupedActive = STORES.reduce((acc, store) => {
@@ -44,7 +39,6 @@ const Index = () => {
   }, [] as { store: Store; items: ShoppingItem[] }[]);
 
   const handleShortPress = (item: ShoppingItem) => {
-    if (drawerOpen || isDrawerCooldown()) return;
     if (item.inCart) {
       uncheckItem(item.id);
     } else {
@@ -60,7 +54,6 @@ const Index = () => {
   };
 
   const handleLongPress = (item: ShoppingItem) => {
-    if (isDrawerCooldown()) return;
     setDetailItem(item);
     setDrawerOpen(true);
   };
@@ -68,7 +61,6 @@ const Index = () => {
   const handleDrawerClose = () => {
     setDrawerOpen(false);
     setDetailItem(null);
-    drawerClosedAt.current = Date.now();
   };
 
   return (
@@ -102,6 +94,7 @@ const Index = () => {
                     item={item}
                     onShortPress={handleShortPress}
                     onLongPress={handleLongPress}
+                    drawerOpen={drawerOpen}
                   />
                 ))}
               </div>
@@ -139,6 +132,7 @@ const Index = () => {
                       item={item}
                       onShortPress={handleShortPress}
                       onLongPress={handleLongPress}
+                      drawerOpen={drawerOpen}
                     />
                   ))}
                 </div>
