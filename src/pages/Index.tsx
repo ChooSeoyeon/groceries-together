@@ -117,11 +117,11 @@ const Index = () => {
             const storeHistoryItems = historyItems.filter(i => i.store === store);
             return (
               <div key={store} className="mb-5">
-                <h2 className="text-base font-bold mb-2 flex items-center gap-2">
+                <h3 className="text-xs font-semibold mb-1.5 flex items-center gap-1.5 text-muted-foreground">
                   <span className={`inline-block w-3 h-3 rounded-full ${STORE_BADGE_CLASS[store]}`} />
                   {store === '터키' ? getTurkiDisplayName() : store}
                   <span className="text-xs font-normal text-muted-foreground">({storeHistoryItems.length})</span>
-                </h2>
+                </h3>
                 <div className="grid grid-cols-3 gap-1.5">
                   {storeHistoryItems.map(item => (
                     <ItemCard
