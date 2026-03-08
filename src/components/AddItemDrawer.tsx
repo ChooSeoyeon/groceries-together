@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 import { Plus, Minus } from 'lucide-react';
 
 interface AddItemDrawerProps {
-  onAdd: (name: string, store: Store, quantity: number, unit: string, urgency: 'urgent' | 'relaxed') => void;
+  onAdd: (name: string, store: Store, quantity: number, unit: string, urgency: 'urgent' | 'relaxed', memo?: string) => void;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   prefillName?: string;
