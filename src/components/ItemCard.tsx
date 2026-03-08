@@ -7,6 +7,7 @@ interface ItemCardProps {
   onLongPress: (item: ShoppingItem) => void;
   onShortPress: (item: ShoppingItem) => void;
   disabled?: boolean;
+  drawerOpen?: boolean;
 }
 
 export function ItemCard({ item, onLongPress, onShortPress, disabled }: ItemCardProps) {
