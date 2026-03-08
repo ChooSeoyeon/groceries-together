@@ -138,6 +138,16 @@ export function AddItemDrawer({ onAdd, open: controlledOpen, onOpenChange, prefi
             </div>
           </div>
 
+          <div>
+            <label className="text-[10px] font-medium text-muted-foreground mb-1 block">메모</label>
+            <Textarea
+              value={memo}
+              onChange={e => setMemo(e.target.value)}
+              placeholder="메모 (선택)"
+              className="bg-secondary border-0 text-sm min-h-[60px] resize-none"
+            />
+          </div>
+
           <Button onClick={handleAdd} className="w-full rounded-full h-9 text-sm" disabled={!name.trim()}>
             추가하기
           </Button>
