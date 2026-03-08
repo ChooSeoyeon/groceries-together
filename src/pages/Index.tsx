@@ -8,6 +8,15 @@ import { ShoppingItem, STORE_BADGE_CLASS } from '@/types/shopping';
 import { History } from 'lucide-react';
 import { toast } from 'sonner';
 
+function getTurkiDisplayName(): string {
+  const now = new Date();
+  const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
+  const weekOfMonth = Math.ceil((now.getDate() + firstDay) / 7);
+  const names = ['안나', '커비', '제리', '도라'];
+  const name = names[Math.min(weekOfMonth, 4) - 1] || names[3];
+  return `터키(${name})`;
+}
+
 const Index = () => {
   const { items, activeItems, historyItems, addItem, checkItem, uncheckItem, deleteItem, updateItem } = useShoppingList();
   const [detailItem, setDetailItem] = useState<ShoppingItem | null>(null);
@@ -68,7 +77,7 @@ const Index = () => {
             <div key={store} className="mb-5">
               <h2 className="text-base font-bold mb-2 flex items-center gap-2">
                 <span className={`inline-block w-3 h-3 rounded-full ${STORE_BADGE_CLASS[store]}`} />
-                {store}
+                {store === '터키' ? getTurkiDisplayName() : store}
                 <span className="text-xs font-normal text-muted-foreground">({storeItems.length})</span>
               </h2>
               <div className="grid grid-cols-4 gap-1.5">

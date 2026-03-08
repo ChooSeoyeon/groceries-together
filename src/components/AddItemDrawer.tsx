@@ -2,11 +2,12 @@ import { STORES, Store, UNITS, STORE_BADGE_CLASS } from '@/types/shopping';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { useState, useEffect } from 'react';
 import { Plus, Minus } from 'lucide-react';
 
 interface AddItemDrawerProps {
-  onAdd: (name: string, store: Store, quantity: number, unit: string, urgency: 'urgent' | 'relaxed') => void;
+  onAdd: (name: string, store: Store, quantity: number, unit: string, urgency: 'urgent' | 'relaxed', memo?: string) => void;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   prefillName?: string;
@@ -23,6 +24,7 @@ export function AddItemDrawer({ onAdd, open: controlledOpen, onOpenChange, prefi
   const [unit, setUnit] = useState('개');
   const [store, setStore] = useState<Store>('아무데나');
   const [urgency, setUrgency] = useState<'urgent' | 'relaxed'>('relaxed');
+  const [memo, setMemo] = useState('');
   
   useEffect(() => {
     if (open && prefillName) {
@@ -32,12 +34,13 @@ export function AddItemDrawer({ onAdd, open: controlledOpen, onOpenChange, prefi
 
   const handleAdd = () => {
     if (!name.trim()) return;
-    onAdd(name.trim(), store, quantity, unit, urgency);
+    onAdd(name.trim(), store, quantity, unit, urgency, memo.trim() || undefined);
     setName('');
     setQuantity(1);
     setUnit('개');
     setStore('아무데나');
     setUrgency('relaxed');
+    setMemo('');
     setOpen(false);
   };
 
@@ -131,6 +134,16 @@ export function AddItemDrawer({ onAdd, open: controlledOpen, onOpenChange, prefi
                 🕐 여유
               </button>
             </div>
+          </div>
+
+          <div>
+            <label className="text-[10px] font-medium text-muted-foreground mb-1 block">메모</label>
+            <Textarea
+              value={memo}
+              onChange={e => setMemo(e.target.value)}
+              placeholder="메모 (선택)"
+              className="bg-secondary border-0 text-sm min-h-[60px] resize-none"
+            />
           </div>
 
           <Button onClick={handleAdd} className="w-full rounded-full h-9 text-sm" disabled={!name.trim()}>

@@ -3,6 +3,7 @@ import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/u
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { useState, useEffect } from 'react';
 import { Minus, Plus, Trash2, RotateCcw, Check } from 'lucide-react';
 
@@ -10,7 +11,7 @@ interface ItemDetailDrawerProps {
   item: ShoppingItem | null;
   open: boolean;
   onClose: () => void;
-  onUpdate: (id: string, updates: Partial<Pick<ShoppingItem, 'name' | 'store' | 'quantity' | 'unit' | 'urgency'>>) => void;
+  onUpdate: (id: string, updates: Partial<Pick<ShoppingItem, 'name' | 'store' | 'quantity' | 'unit' | 'urgency' | 'memo'>>) => void;
   onDelete: (id: string) => void;
   onCheck: (id: string) => void;
   onUncheck: (id: string) => void;
@@ -22,6 +23,7 @@ export function ItemDetailDrawer({ item, open, onClose, onUpdate, onDelete, onCh
   const [unit, setUnit] = useState('개');
   const [store, setStore] = useState<Store>('아무데나');
   const [urgency, setUrgency] = useState<'urgent' | 'relaxed'>('relaxed');
+  const [memo, setMemo] = useState('');
 
   useEffect(() => {
     if (item) {
@@ -30,13 +32,14 @@ export function ItemDetailDrawer({ item, open, onClose, onUpdate, onDelete, onCh
       setUnit(item.unit);
       setStore(item.store);
       setUrgency(item.urgency);
+      setMemo(item.memo || '');
     }
   }, [item]);
 
   if (!item) return null;
 
   const handleClose = () => {
-    onUpdate(item.id, { name, quantity, unit, store, urgency });
+    onUpdate(item.id, { name, quantity, unit, store, urgency, memo: memo.trim() || undefined });
     onClose();
   };
 
@@ -117,6 +120,16 @@ export function ItemDetailDrawer({ item, open, onClose, onUpdate, onDelete, onCh
                 🕐 여유
               </button>
             </div>
+          </div>
+
+          <div>
+            <label className="text-[10px] font-medium text-muted-foreground mb-1 block">메모</label>
+            <Textarea
+              value={memo}
+              onChange={e => setMemo(e.target.value)}
+              placeholder="메모 (선택)"
+              className="bg-secondary border-0 text-sm min-h-[60px] resize-none"
+            />
           </div>
 
           <AlertDialog>
