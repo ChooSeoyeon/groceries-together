@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { STORES, Store } from '@/types/shopping';
 import { useShoppingList } from '@/hooks/useShoppingList';
 import { ItemCard } from '@/components/ItemCard';
@@ -24,7 +24,11 @@ const Index = () => {
   const { items, activeItems, historyItems, addItem, checkItem, uncheckItem, deleteItem, updateItem } = useShoppingList();
   const [detailItem, setDetailItem] = useState<ShoppingItem | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  
+  const drawerClosedAt = useRef(0);
+
+  const isDrawerCooldown = useCallback(() => {
+    return Date.now() - drawerClosedAt.current < 300;
+  }, []);
 
   // Group active items by store
   const groupedActive = STORES.reduce((acc, store) => {
@@ -40,6 +44,7 @@ const Index = () => {
   }, [] as { store: Store; items: ShoppingItem[] }[]);
 
   const handleShortPress = (item: ShoppingItem) => {
+    if (drawerOpen || isDrawerCooldown()) return;
     if (item.inCart) {
       uncheckItem(item.id);
     } else {
@@ -55,8 +60,15 @@ const Index = () => {
   };
 
   const handleLongPress = (item: ShoppingItem) => {
+    if (isDrawerCooldown()) return;
     setDetailItem(item);
     setDrawerOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setDrawerOpen(false);
+    setDetailItem(null);
+    drawerClosedAt.current = Date.now();
   };
 
   return (
@@ -70,7 +82,7 @@ const Index = () => {
       </header>
 
       {/* Shopping List grouped by store */}
-      <section className={`px-4 mt-2 ${drawerOpen ? 'pointer-events-none' : ''}`}>
+      <section className="px-4 mt-2">
         {groupedActive.length === 0 ? (
           <div className="text-center py-16 text-muted-foreground text-sm">
             리스트가 비어있어요 ✨<br />+ 버튼으로 물건을 추가해보세요
@@ -99,7 +111,7 @@ const Index = () => {
       </section>
 
       {/* History */}
-      <section className={`px-4 mt-6 ${drawerOpen ? 'pointer-events-none' : ''}`}>
+      <section className="px-4 mt-6">
         <div className="flex items-center gap-2 mb-3">
           <History className="w-4 h-4 text-muted-foreground" />
           <h2 className="text-sm font-semibold text-muted-foreground">
@@ -140,7 +152,7 @@ const Index = () => {
       <ItemDetailDrawer
         item={detailItem}
         open={drawerOpen}
-        onClose={() => { setDrawerOpen(false); setDetailItem(null); }}
+        onClose={handleDrawerClose}
         onUpdate={updateItem}
         onDelete={deleteItem}
         onCheck={checkItem}
