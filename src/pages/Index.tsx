@@ -78,7 +78,7 @@ const Index = () => {
         ) : (
           groupedActive.map(({ store, items: storeItems }) => (
             <div key={store} className="mb-5">
-              <h2 className="text-base font-bold mb-2 flex items-center gap-2">
+              <h2 className="text-base font-bold mb-2 flex items-center gap-1">
                 <span className={`inline-block w-3 h-3 rounded-full ${STORE_BADGE_CLASS[store]}`} />
                 {store === '터키' ? getTurkiDisplayName() : store}
                 <span className="text-xs font-normal text-muted-foreground">({storeItems.length})</span>
