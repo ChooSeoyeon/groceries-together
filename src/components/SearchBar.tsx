@@ -81,13 +81,15 @@ export function SearchBar({ items, onUncheck, onAdd, onLongPress }: SearchBarPro
               </div>
             ))}
           </div>
-          {/* Always show create button when there's a query */}
-          <button
-            onClick={handleCreateNew}
-            className="w-full py-3 mt-2 rounded-xl bg-secondary text-secondary-foreground text-sm font-medium"
-          >
-            "{trimmed}" 새로 추가하기 +
-          </button>
+          {/* Show create button only if no exact name match */}
+          {!items.some(i => i.name === trimmed) && (
+            <button
+              onClick={handleCreateNew}
+              className="w-full py-3 mt-2 rounded-xl bg-secondary text-secondary-foreground text-sm font-medium"
+            >
+              "{trimmed}" 새로 추가하기 +
+            </button>
+          )}
         </div>
       )}
 
