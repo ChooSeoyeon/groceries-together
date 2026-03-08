@@ -121,15 +121,6 @@ export function ItemDetailDrawer({ item, open, onClose, onUpdate, onDelete, onCh
             <Button onClick={handleSave} className="flex-1 rounded-full h-9 text-sm">
               <Check className="w-3.5 h-3.5 mr-1" /> 저장
             </Button>
-            {item.inCart ? (
-              <Button variant="outline" className="rounded-full h-9 text-xs" onClick={() => { onUncheck(item.id); onClose(); }}>
-                <RotateCcw className="w-3.5 h-3.5 mr-1" /> 리스트로
-              </Button>
-            ) : (
-              <Button variant="outline" className="rounded-full h-9 text-xs" onClick={() => { onCheck(item.id); onClose(); }}>
-                <Check className="w-3.5 h-3.5 mr-1" /> 완료
-              </Button>
-            )}
             <Button variant="destructive" size="icon" className="rounded-full h-9 w-9" onClick={() => { onDelete(item.id); onClose(); }}>
               <Trash2 className="w-3.5 h-3.5" />
             </Button>
