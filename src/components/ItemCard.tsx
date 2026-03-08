@@ -56,10 +56,10 @@ export function ItemCard({ item, onLongPress, onShortPress, disabled }: ItemCard
         transition-all active:scale-95 cursor-pointer select-none
         ${cardClasses}`}
     >
-      <span className="text-xs font-semibold text-center leading-tight line-clamp-2 px-1">
+      <span className="text-base font-semibold text-center leading-tight line-clamp-2 px-1">
         {item.name}
       </span>
-      <span className="text-[10px] opacity-60 mt-0.5">
+      <span className="text-sm opacity-60">
         {item.quantity}{item.unit}
       </span>
       {item.memo && (
