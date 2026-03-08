@@ -63,7 +63,7 @@ const Index = () => {
                 {store}
                 <span className="text-xs font-normal text-muted-foreground">({storeItems.length})</span>
               </h2>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-4 gap-1.5">
                 {storeItems.map(item => (
                   <ItemCard
                     key={item.id}
