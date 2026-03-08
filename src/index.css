@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 [data-sonner-toaster] {
-  --width: 50vw !important;
+  --width: 200px !important;
 }
 
 [data-sonner-toaster] [data-sonner-toast] {
-  width: 50vw !important;
-  max-width: 50vw !important;
+  width: 200px !important;
+  max-width: 200px !important;
 }
 
 @layer base {
