@@ -1,4 +1,4 @@
-import { ShoppingItem, STORE_BADGE_CLASS } from '@/types/shopping';
+import { ShoppingItem } from '@/types/shopping';
 import { useRef, useCallback } from 'react';
 
 interface ItemCardProps {
@@ -49,18 +49,15 @@ export function ItemCard({ item, onLongPress, onShortPress }: ItemCardProps) {
       onMouseDown={(e) => handleStart(e.clientX, e.clientY)}
       onMouseMove={(e) => { if (e.buttons) handleMove(e.clientX, e.clientY); }}
       onMouseUp={handleEnd}
-      className={`relative flex flex-col items-center justify-center p-3 rounded-2xl
-        transition-all active:scale-95 cursor-pointer select-none min-h-[90px]
+      className={`relative flex flex-col items-center justify-center aspect-square rounded-xl
+        transition-all active:scale-95 cursor-pointer select-none
         ${urgencyClasses}
         ${item.inCart ? 'opacity-40' : ''}`}
     >
-      {/* Name */}
-      <span className="text-sm font-semibold text-center leading-tight line-clamp-2">
+      <span className="text-xs font-semibold text-center leading-tight line-clamp-2 px-1">
         {item.name}
       </span>
-
-      {/* Quantity */}
-      <span className="text-xs opacity-80 mt-1">
+      <span className="text-[10px] opacity-60 mt-0.5">
         {item.quantity}{item.unit}
       </span>
     </div>
