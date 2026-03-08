@@ -113,16 +113,28 @@ const Index = () => {
             아직 완료한 물건이 없어요
           </div>
         ) : (
-          <div className="grid grid-cols-3 gap-1.5">
-            {historyItems.map(item => (
-              <ItemCard
-                key={item.id}
-                item={item}
-                onShortPress={handleShortPress}
-                onLongPress={handleLongPress}
-              />
-            ))}
-          </div>
+          STORES.filter(store => historyItems.some(i => i.store === store)).map(store => {
+            const storeHistoryItems = historyItems.filter(i => i.store === store);
+            return (
+              <div key={store} className="mb-5">
+                <h2 className="text-base font-bold mb-2 flex items-center gap-2">
+                  <span className={`inline-block w-3 h-3 rounded-full ${STORE_BADGE_CLASS[store]}`} />
+                  {store === '터키' ? getTurkiDisplayName() : store}
+                  <span className="text-xs font-normal text-muted-foreground">({storeHistoryItems.length})</span>
+                </h2>
+                <div className="grid grid-cols-3 gap-1.5">
+                  {storeHistoryItems.map(item => (
+                    <ItemCard
+                      key={item.id}
+                      item={item}
+                      onShortPress={handleShortPress}
+                      onLongPress={handleLongPress}
+                    />
+                  ))}
+                </div>
+              </div>
+            );
+          })
         )}
       </section>
 
