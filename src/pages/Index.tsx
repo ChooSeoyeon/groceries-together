@@ -36,7 +36,7 @@ const Index = () => {
       toast(`${item.name} 완료!`, {
         icon: '✅',
         action: {
-          label: '되돌리기',
+          label: '↩',
           onClick: () => uncheckItem(item.id),
         },
         duration: 4000,
