@@ -40,7 +40,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-24 max-w-md mx-auto">
+    <div className="min-h-screen bg-background pb-24 max-w-md mx-auto relative">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-lg pt-safe">
         <div className="px-4 pt-3 pb-2">
@@ -125,7 +125,12 @@ const Index = () => {
         onUncheck={uncheckItem}
       />
 
-      <AddItemDrawer onAdd={addItem} />
+      {/* FAB */}
+      <div className="sticky bottom-5 z-50 flex justify-end pr-4 pointer-events-none">
+        <div className="pointer-events-auto">
+          <AddItemDrawer onAdd={addItem} />
+        </div>
+      </div>
     </div>
   );
 };
