@@ -70,7 +70,7 @@ const Index = () => {
       </header>
 
       {/* Shopping List grouped by store */}
-      <section className="px-4 mt-2">
+      <section className={`px-4 mt-2 ${drawerOpen ? 'pointer-events-none' : ''}`}>
         {groupedActive.length === 0 ? (
           <div className="text-center py-16 text-muted-foreground text-sm">
             리스트가 비어있어요 ✨<br />+ 버튼으로 물건을 추가해보세요
@@ -99,7 +99,7 @@ const Index = () => {
       </section>
 
       {/* History */}
-      <section className="px-4 mt-6">
+      <section className={`px-4 mt-6 ${drawerOpen ? 'pointer-events-none' : ''}`}>
         <div className="flex items-center gap-2 mb-3">
           <History className="w-4 h-4 text-muted-foreground" />
           <h2 className="text-sm font-semibold text-muted-foreground">
