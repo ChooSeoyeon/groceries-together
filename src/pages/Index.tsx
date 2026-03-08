@@ -30,7 +30,13 @@ const Index = () => {
   const handleShortPress = (item: ShoppingItem) => {
     if (item.inCart) {
       uncheckItem(item.id);
-      toast('리스트로 복원했어요', { icon: '↩️' });
+      toast(`${item.name} 복원`, {
+        action: {
+          label: '↩︎',
+          onClick: () => checkItem(item.id),
+        },
+        duration: 4000,
+      });
     } else {
       checkItem(item.id);
       toast(`${item.name} 완료`, {
