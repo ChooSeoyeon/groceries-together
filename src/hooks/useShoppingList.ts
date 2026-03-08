@@ -23,7 +23,7 @@ export function useShoppingList() {
     saveItems(items);
   }, [items]);
 
-  const addItem = useCallback((name: string, store: Store, quantity: number, unit: string, urgency: Urgency) => {
+  const addItem = useCallback((name: string, store: Store, quantity: number, unit: string, urgency: Urgency, memo?: string) => {
     const newItem: ShoppingItem = {
       id: crypto.randomUUID(),
       name,
@@ -31,6 +31,7 @@ export function useShoppingList() {
       quantity,
       unit,
       urgency,
+      memo: memo || undefined,
       inCart: false,
       createdAt: Date.now(),
     };
