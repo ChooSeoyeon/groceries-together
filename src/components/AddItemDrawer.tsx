@@ -7,15 +7,28 @@ import { Plus, Minus } from 'lucide-react';
 
 interface AddItemDrawerProps {
   onAdd: (name: string, store: Store, quantity: number, unit: string, urgency: 'urgent' | 'relaxed') => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  prefillName?: string;
 }
 
-export function AddItemDrawer({ onAdd }: AddItemDrawerProps) {
-  const [open, setOpen] = useState(false);
+export function AddItemDrawer({ onAdd, open: controlledOpen, onOpenChange, prefillName }: AddItemDrawerProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const setOpen = isControlled ? (onOpenChange ?? (() => {})) : setInternalOpen;
+  
   const [name, setName] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [unit, setUnit] = useState('개');
   const [store, setStore] = useState<Store>('아무데나');
   const [urgency, setUrgency] = useState<'urgent' | 'relaxed'>('relaxed');
+  
+  useEffect(() => {
+    if (open && prefillName) {
+      setName(prefillName);
+    }
+  }, [open, prefillName]);
 
   const handleAdd = () => {
     if (!name.trim()) return;
