@@ -24,7 +24,11 @@ const Index = () => {
   const { items, activeItems, historyItems, addItem, checkItem, uncheckItem, deleteItem, updateItem } = useShoppingList();
   const [detailItem, setDetailItem] = useState<ShoppingItem | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  
+  const drawerClosedAt = useRef(0);
+
+  const isDrawerCooldown = useCallback(() => {
+    return Date.now() - drawerClosedAt.current < 300;
+  }, []);
 
   // Group active items by store
   const groupedActive = STORES.reduce((acc, store) => {
