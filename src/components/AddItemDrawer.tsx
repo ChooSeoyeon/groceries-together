@@ -2,7 +2,7 @@ import { STORES, Store, UNITS, STORE_BADGE_CLASS } from '@/types/shopping';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus, Minus } from 'lucide-react';
 
 interface AddItemDrawerProps {
