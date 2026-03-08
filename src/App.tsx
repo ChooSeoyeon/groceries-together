@@ -12,7 +12,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
-      <Sonner />
+      <Sonner position="top-center" toastOptions={{ className: 'max-w-md mx-auto' }} />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
