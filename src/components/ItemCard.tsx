@@ -36,11 +36,13 @@ export function ItemCard({ item, onLongPress, onShortPress, disabled }: ItemCard
     return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, []);
 
-  const cardClasses = item.inCart
-    ? 'bg-[hsl(var(--history-card))] text-[hsl(var(--history-card-foreground))]'
-    : item.urgency === 'urgent'
-      ? 'bg-urgent-card text-urgent-card-foreground'
-      : 'bg-relaxed-card text-relaxed-card-foreground';
+  const cardClasses = disabled
+    ? 'bg-background border-2 border-dashed border-muted-foreground/30 text-muted-foreground'
+    : item.inCart
+      ? 'bg-[hsl(var(--history-card))] text-[hsl(var(--history-card-foreground))]'
+      : item.urgency === 'urgent'
+        ? 'bg-urgent-card text-urgent-card-foreground'
+        : 'bg-relaxed-card text-relaxed-card-foreground';
 
   return (
     <div
