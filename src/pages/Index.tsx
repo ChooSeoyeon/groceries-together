@@ -152,7 +152,7 @@ const Index = () => {
       <ItemDetailDrawer
         item={detailItem}
         open={drawerOpen}
-        onClose={() => { setDrawerOpen(false); setDetailItem(null); }}
+        onClose={handleDrawerClose}
         onUpdate={updateItem}
         onDelete={deleteItem}
         onCheck={checkItem}
