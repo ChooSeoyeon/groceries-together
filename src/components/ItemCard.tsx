@@ -1,6 +1,5 @@
 import { ShoppingItem, STORE_BADGE_CLASS } from '@/types/shopping';
 import { useRef, useCallback } from 'react';
-import { Flame, Clock } from 'lucide-react';
 
 interface ItemCardProps {
   item: ShoppingItem;
@@ -19,7 +18,6 @@ export function ItemCard({ item, onLongPress, onShortPress }: ItemCardProps) {
     timerRef.current = setTimeout(() => {
       isLongPress.current = true;
       onLongPress(item);
-      // Vibrate feedback if available
       if (navigator.vibrate) navigator.vibrate(50);
     }, 500);
   }, [item, onLongPress]);
@@ -39,6 +37,10 @@ export function ItemCard({ item, onLongPress, onShortPress }: ItemCardProps) {
     }
   }, [item, onShortPress]);
 
+  const urgencyClasses = item.urgency === 'urgent'
+    ? 'bg-urgent-card text-urgent-card-foreground'
+    : 'bg-relaxed-card text-relaxed-card-foreground';
+
   return (
     <div
       onTouchStart={(e) => handleStart(e.touches[0].clientX, e.touches[0].clientY)}
@@ -47,35 +49,19 @@ export function ItemCard({ item, onLongPress, onShortPress }: ItemCardProps) {
       onMouseDown={(e) => handleStart(e.clientX, e.clientY)}
       onMouseMove={(e) => { if (e.buttons) handleMove(e.clientX, e.clientY); }}
       onMouseUp={handleEnd}
-      className={`relative flex flex-col items-center justify-center p-3 rounded-2xl bg-card border border-border
+      className={`relative flex flex-col items-center justify-center p-3 rounded-2xl
         transition-all active:scale-95 cursor-pointer select-none min-h-[90px]
-        ${item.inCart ? 'opacity-50' : ''}`}
+        ${urgencyClasses}
+        ${item.inCart ? 'opacity-40' : ''}`}
     >
-      {/* Urgency indicator */}
-      {item.urgency === 'urgent' && (
-        <div className="absolute top-1.5 right-1.5">
-          <Flame className="w-3.5 h-3.5 text-urgent" />
-        </div>
-      )}
-      {item.urgency === 'relaxed' && (
-        <div className="absolute top-1.5 right-1.5">
-          <Clock className="w-3.5 h-3.5 text-relaxed" />
-        </div>
-      )}
-
       {/* Name */}
       <span className="text-sm font-semibold text-center leading-tight line-clamp-2">
         {item.name}
       </span>
 
       {/* Quantity */}
-      <span className="text-xs text-muted-foreground mt-1">
+      <span className="text-xs opacity-80 mt-1">
         {item.quantity}{item.unit}
-      </span>
-
-      {/* Store badge */}
-      <span className={`mt-1.5 px-2 py-0.5 rounded-full text-[10px] font-medium ${STORE_BADGE_CLASS[item.store]}`}>
-        {item.store}
       </span>
     </div>
   );
