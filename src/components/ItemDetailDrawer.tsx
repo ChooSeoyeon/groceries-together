@@ -11,7 +11,7 @@ interface ItemDetailDrawerProps {
   item: ShoppingItem | null;
   open: boolean;
   onClose: () => void;
-  onUpdate: (id: string, updates: Partial<Pick<ShoppingItem, 'name' | 'store' | 'quantity' | 'unit' | 'urgency'>>) => void;
+  onUpdate: (id: string, updates: Partial<Pick<ShoppingItem, 'name' | 'store' | 'quantity' | 'unit' | 'urgency' | 'memo'>>) => void;
   onDelete: (id: string) => void;
   onCheck: (id: string) => void;
   onUncheck: (id: string) => void;
