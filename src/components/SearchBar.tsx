@@ -67,16 +67,15 @@ export function SearchBar({ items, onUncheck, onAdd, onLongPress }: SearchBarPro
         <div className="fixed bottom-16 left-0 right-0 z-50 max-w-md mx-auto px-4 pb-2 max-h-[60vh] overflow-y-auto">
           <div className="grid grid-cols-4 gap-1.5">
             {results.map(item => (
-              <div key={item.id} className={!item.inCart ? 'relative pointer-events-none' : ''}>
+              <div key={item.id} className={!item.inCart ? 'relative overflow-hidden rounded-xl pointer-events-none' : ''}>
                 <ItemCard
                   item={item}
                   onShortPress={handleResultPress}
                   onLongPress={onLongPress}
                 />
-                {/* Diagonal line for active (already in list) items */}
                 {!item.inCart && (
                   <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
-                    <line x1="0" y1="100" x2="100" y2="0" stroke="hsl(var(--foreground))" strokeWidth="2" strokeOpacity="0.4" />
+                    <line x1="0" y1="100" x2="100" y2="0" stroke="hsl(var(--foreground))" strokeWidth="1.5" strokeOpacity="0.2" />
                   </svg>
                 )}
               </div>
