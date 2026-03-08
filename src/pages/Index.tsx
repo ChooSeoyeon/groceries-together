@@ -40,7 +40,7 @@ const Index = () => {
   }, [] as { store: Store; items: ShoppingItem[] }[]);
 
   const handleShortPress = (item: ShoppingItem) => {
-    if (Date.now() - drawerClosedAt.current < 400) return;
+    if (Date.now() - drawerClosedAt.current < 300) return;
     if (item.inCart) {
       uncheckItem(item.id);
     } else {
@@ -56,7 +56,7 @@ const Index = () => {
   };
 
   const handleLongPress = (item: ShoppingItem) => {
-    if (Date.now() - drawerClosedAt.current < 400) return;
+    if (Date.now() - drawerClosedAt.current < 300) return;
     setDetailItem(item);
     setDrawerOpen(true);
   };
@@ -98,7 +98,6 @@ const Index = () => {
                     item={item}
                     onShortPress={handleShortPress}
                     onLongPress={handleLongPress}
-                    drawerOpen={drawerOpen}
                   />
                 ))}
               </div>
@@ -136,7 +135,7 @@ const Index = () => {
                       item={item}
                       onShortPress={handleShortPress}
                       onLongPress={handleLongPress}
-                      drawerOpen={drawerOpen}
+                      
                     />
                   ))}
                 </div>

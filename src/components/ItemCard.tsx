@@ -7,25 +7,20 @@ interface ItemCardProps {
   onLongPress: (item: ShoppingItem) => void;
   onShortPress: (item: ShoppingItem) => void;
   disabled?: boolean;
-  drawerOpen?: boolean;
 }
 
-export function ItemCard({ item, onLongPress, onShortPress, disabled, drawerOpen }: ItemCardProps) {
+export function ItemCard({ item, onLongPress, onShortPress, disabled }: ItemCardProps) {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isLongPress = useRef(false);
-  const startedWhileDrawerOpen = useRef(false);
 
   const handleStart = useCallback(() => {
-    startedWhileDrawerOpen.current = !!drawerOpen;
     isLongPress.current = false;
     timerRef.current = setTimeout(() => {
       isLongPress.current = true;
-      if (!startedWhileDrawerOpen.current) {
-        onLongPress(item);
-        if (navigator.vibrate) navigator.vibrate(50);
-      }
+      onLongPress(item);
+      if (navigator.vibrate) navigator.vibrate(50);
     }, 500);
-  }, [item, onLongPress, drawerOpen]);
+  }, [item, onLongPress]);
 
   const handleMove = useCallback(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
@@ -33,7 +28,7 @@ export function ItemCard({ item, onLongPress, onShortPress, disabled, drawerOpen
 
   const handleEnd = useCallback(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
-    if (!isLongPress.current && !startedWhileDrawerOpen.current) {
+    if (!isLongPress.current) {
       onShortPress(item);
     }
   }, [item, onShortPress]);
