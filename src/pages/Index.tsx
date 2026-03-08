@@ -86,39 +86,31 @@ const Index = () => {
         )}
       </section>
 
-      {/* History Toggle */}
+      {/* History */}
       <section className="px-4 mt-6">
-        <button
-          onClick={() => setShowHistory(!showHistory)}
-          className="flex items-center gap-2 mb-3 w-full"
-        >
+        <div className="flex items-center gap-2 mb-3">
           <History className="w-4 h-4 text-muted-foreground" />
           <h2 className="text-sm font-semibold text-muted-foreground">
             히스토리
             <span className="ml-1 font-normal">({historyItems.length})</span>
           </h2>
-          <span className="ml-auto text-xs text-muted-foreground">
-            {showHistory ? '접기 ▲' : '펼치기 ▼'}
-          </span>
-        </button>
+        </div>
 
-        {showHistory && (
-          historyItems.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground text-sm">
-              아직 완료한 물건이 없어요
-            </div>
-          ) : (
-            <div className="grid grid-cols-4 gap-1.5">
-              {historyItems.map(item => (
-                <ItemCard
-                  key={item.id}
-                  item={item}
-                  onShortPress={handleShortPress}
-                  onLongPress={handleLongPress}
-                />
-              ))}
-            </div>
-          )
+        {historyItems.length === 0 ? (
+          <div className="text-center py-8 text-muted-foreground text-sm">
+            아직 완료한 물건이 없어요
+          </div>
+        ) : (
+          <div className="grid grid-cols-4 gap-1.5">
+            {historyItems.map(item => (
+              <ItemCard
+                key={item.id}
+                item={item}
+                onShortPress={handleShortPress}
+                onLongPress={handleLongPress}
+              />
+            ))}
+          </div>
         )}
       </section>
 
