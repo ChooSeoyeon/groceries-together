@@ -42,8 +42,9 @@ export function ItemDetailDrawer({ item, open, onClose, onUpdate, onDelete, onCh
   return (
     <Drawer open={open} onOpenChange={(o) => !o && handleClose()}>
       <DrawerContent className="max-w-md mx-auto px-4 pb-6">
-        <DrawerHeader className="px-0 pb-2">
+        <DrawerHeader className="px-0 pb-2 flex items-center justify-between">
           <DrawerTitle className="text-left text-sm">물건 상세</DrawerTitle>
+          <button onClick={handleClose} className="text-sm font-semibold text-primary">done</button>
         </DrawerHeader>
 
         <div className="space-y-3">
