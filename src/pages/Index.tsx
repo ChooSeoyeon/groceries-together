@@ -60,8 +60,15 @@ const Index = () => {
   };
 
   const handleLongPress = (item: ShoppingItem) => {
+    if (isDrawerCooldown()) return;
     setDetailItem(item);
     setDrawerOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setDrawerOpen(false);
+    setDetailItem(null);
+    drawerClosedAt.current = Date.now();
   };
 
   return (
