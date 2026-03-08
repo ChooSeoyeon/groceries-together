@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useState, useEffect } from 'react';
-import { Plus, Minus } from 'lucide-react';
+import { Plus, Minus, X } from 'lucide-react';
 
 interface AddItemDrawerProps {
   onAdd: (name: string, store: Store, quantity: number, unit: string, urgency: 'urgent' | 'relaxed', memo?: string) => void;

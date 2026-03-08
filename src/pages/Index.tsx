@@ -10,8 +10,11 @@ import { toast } from 'sonner';
 
 function getTurkiDisplayName(): string {
   const now = new Date();
-  const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
-  const weekOfMonth = Math.ceil((now.getDate() + firstDay) / 7);
+  const day = now.getDate();
+  // Monday-based week: find what day of week the 1st is (Mon=0)
+  const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
+  const mondayOffset = (firstDayOfMonth + 6) % 7; // days from Mon to 1st
+  const weekOfMonth = Math.ceil((day + mondayOffset) / 7);
   const names = ['안나', '커비', '제리', '도라'];
   const name = names[Math.min(weekOfMonth, 4) - 1] || names[3];
   return `터키(${name})`;

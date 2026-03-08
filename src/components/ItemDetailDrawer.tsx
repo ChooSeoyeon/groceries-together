@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useState, useEffect } from 'react';
-import { Minus, Plus, Trash2, RotateCcw, Check } from 'lucide-react';
+import { Minus, Plus, Trash2, RotateCcw, Check, X } from 'lucide-react';
 
 interface ItemDetailDrawerProps {
   item: ShoppingItem | null;
