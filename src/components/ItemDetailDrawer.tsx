@@ -118,7 +118,7 @@ export function ItemDetailDrawer({ item, open, onClose, onUpdate, onDelete, onCh
             </div>
           </div>
 
-          <Button variant="destructive" className="w-full rounded-full h-9 text-sm" onClick={() => { onDelete(item.id); onClose(); }}>
+          <Button variant="destructive" className="w-full rounded-full h-9 text-sm opacity-60" onClick={() => { onDelete(item.id); onClose(); }}>
             <Trash2 className="w-3.5 h-3.5 mr-1" /> 삭제하기
           </Button>
         </div>
