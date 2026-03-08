@@ -1,8 +1,8 @@
 import { ShoppingItem } from '@/types/shopping';
 import { useRef, useCallback, useEffect } from 'react';
 
-// Global timestamp of last long press to prevent ghost taps on shifted items
-let lastLongPressTime = 0;
+// Global: true while ANY finger/mouse is held down after a long press
+let isAnyPressActive = false;
 
 interface ItemCardProps {
   item: ShoppingItem;
@@ -13,44 +13,39 @@ interface ItemCardProps {
 export function ItemCard({ item, onLongPress, onShortPress }: ItemCardProps) {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isLongPress = useRef(false);
-  const startPos = useRef({ x: 0, y: 0 });
-  const itemIdAtStart = useRef(item.id);
+  const isDown = useRef(false);
 
-  // Track which item ID we started interacting with
   const handleStart = useCallback((clientX: number, clientY: number) => {
+    // If another card's long press is still active (finger held), ignore
+    if (isAnyPressActive) return;
+
     isLongPress.current = false;
-    itemIdAtStart.current = item.id;
-    startPos.current = { x: clientX, y: clientY };
+    isDown.current = true;
+
     timerRef.current = setTimeout(() => {
       isLongPress.current = true;
-      lastLongPressTime = Date.now();
+      isAnyPressActive = true;
       onLongPress(item);
       if (navigator.vibrate) navigator.vibrate(50);
     }, 500);
   }, [item, onLongPress]);
 
   const handleMove = useCallback((clientX: number, clientY: number) => {
-    const dx = Math.abs(clientX - startPos.current.x);
-    const dy = Math.abs(clientY - startPos.current.y);
-    if (dx > 10 || dy > 10) {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    }
+    // Cancel timer on movement (not the global flag though)
+    if (timerRef.current) clearTimeout(timerRef.current);
   }, []);
 
-  const handleEnd = useCallback((e: React.TouchEvent | React.MouseEvent) => {
+  const handleEnd = useCallback(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
-    
-    // Block short press if:
-    // 1. This was a long press
-    // 2. A long press happened recently (item shifted into this position)
-    // 3. The item ID changed (meaning this card now shows a different item)
-    const recentLongPress = Date.now() - lastLongPressTime < 500;
-    
-    if (!isLongPress.current && !recentLongPress) {
+
+    // Only fire short press if this card started the interaction and it wasn't a long press
+    if (isDown.current && !isLongPress.current && !isAnyPressActive) {
       onShortPress(item);
     }
-    
-    e.preventDefault();
+
+    isDown.current = false;
+    // Release global lock
+    isAnyPressActive = false;
   }, [item, onShortPress]);
 
   useEffect(() => {
