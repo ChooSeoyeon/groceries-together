@@ -53,10 +53,14 @@ export default {
         urgent: {
           DEFAULT: "hsl(var(--urgent))",
           foreground: "hsl(var(--urgent-foreground))",
+          card: "hsl(var(--urgent-card))",
+          "card-foreground": "hsl(var(--urgent-card-foreground))",
         },
         relaxed: {
           DEFAULT: "hsl(var(--relaxed))",
           foreground: "hsl(var(--relaxed-foreground))",
+          card: "hsl(var(--relaxed-card))",
+          "card-foreground": "hsl(var(--relaxed-card-foreground))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
