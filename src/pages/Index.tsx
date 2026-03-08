@@ -40,12 +40,12 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className="min-h-screen bg-background pb-24 max-w-md mx-auto">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-lg pt-safe">
-        <div className="px-4 pt-4 pb-3">
-          <h1 className="text-2xl font-bold">🛒 우리집 장보기</h1>
-          <p className="text-xs text-muted-foreground mt-0.5">짧게 탭 = 상세 · 길게 꾹 = 완료</p>
+        <div className="px-4 pt-3 pb-2">
+          <h1 className="text-lg font-bold">🛒 우리집 장보기</h1>
+          <p className="text-[10px] text-muted-foreground">짧게 탭 = 상세 · 길게 꾹 = 완료</p>
         </div>
       </header>
 
