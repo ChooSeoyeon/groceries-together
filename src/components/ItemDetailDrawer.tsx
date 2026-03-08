@@ -119,9 +119,23 @@ export function ItemDetailDrawer({ item, open, onClose, onUpdate, onDelete, onCh
             </div>
           </div>
 
-          <Button variant="destructive" className="w-full rounded-full h-9 text-sm opacity-60" onClick={() => { onDelete(item.id); onClose(); }}>
-            <Trash2 className="w-3.5 h-3.5 mr-1" /> 삭제하기
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="destructive" className="w-full rounded-full h-9 text-sm opacity-60">
+                <Trash2 className="w-3.5 h-3.5 mr-1" /> 삭제하기
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent className="max-w-[280px] rounded-2xl">
+              <AlertDialogHeader>
+                <AlertDialogTitle className="text-sm">정말 삭제하시겠습니까?</AlertDialogTitle>
+                <AlertDialogDescription className="text-xs">이 항목을 삭제하면 되돌릴 수 없습니다.</AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel className="rounded-full h-8 text-xs">취소</AlertDialogCancel>
+                <AlertDialogAction className="rounded-full h-8 text-xs" onClick={() => { onDelete(item.id); onClose(); }}>확인</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </DrawerContent>
     </Drawer>
