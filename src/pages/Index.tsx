@@ -39,7 +39,6 @@ const Index = () => {
   }, [] as { store: Store; items: ShoppingItem[] }[]);
 
   const handleShortPress = (item: ShoppingItem) => {
-    if (drawerOpen || isDrawerCooldown()) return;
     if (item.inCart) {
       uncheckItem(item.id);
     } else {
