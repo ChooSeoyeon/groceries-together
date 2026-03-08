@@ -104,7 +104,6 @@ const Index = () => {
           <History className="w-4 h-4 text-muted-foreground" />
           <h2 className="text-sm font-semibold text-muted-foreground">
             히스토리
-            <span className="ml-1 font-normal">({historyItems.length})</span>
           </h2>
         </div>
 
