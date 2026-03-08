@@ -40,7 +40,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-24 max-w-md mx-auto">
+    <div className="min-h-screen bg-background pb-24 max-w-md mx-auto relative">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-lg pt-safe">
         <div className="px-4 pt-3 pb-2">
