@@ -43,11 +43,13 @@ export function AddItemDrawer({ onAdd, open: controlledOpen, onOpenChange, prefi
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
-        <Button size="icon" className="rounded-full h-11 w-11 shadow-md z-50 p-0">
-          <Plus className="w-4 h-4" />
-        </Button>
-      </DrawerTrigger>
+      {!isControlled && (
+        <DrawerTrigger asChild>
+          <Button size="icon" className="rounded-full h-11 w-11 shadow-md z-50 p-0">
+            <Plus className="w-4 h-4" />
+          </Button>
+        </DrawerTrigger>
+      )}
       <DrawerContent className="max-w-md mx-auto px-4 pb-6">
         <DrawerHeader className="px-0 pb-2">
           <DrawerTitle className="text-left text-sm">물건 추가</DrawerTitle>

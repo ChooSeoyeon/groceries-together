@@ -1,11 +1,11 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState } from 'react';
 import { STORES, Store } from '@/types/shopping';
 import { useShoppingList } from '@/hooks/useShoppingList';
 import { ItemCard } from '@/components/ItemCard';
 import { ItemDetailDrawer } from '@/components/ItemDetailDrawer';
-import { AddItemDrawer } from '@/components/AddItemDrawer';
+import { SearchBar } from '@/components/SearchBar';
 import { ShoppingItem, STORE_BADGE_CLASS } from '@/types/shopping';
-import { History, Undo2 } from 'lucide-react';
+import { History } from 'lucide-react';
 import { toast } from 'sonner';
 
 const Index = () => {
