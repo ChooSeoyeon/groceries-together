@@ -8,7 +8,7 @@ import { Store, Urgency } from '@/types/shopping';
 interface SearchBarProps {
   items: ShoppingItem[];
   onUncheck: (id: string) => void;
-  onAdd: (name: string, store: Store, quantity: number, unit: string, urgency: Urgency) => void;
+  onAdd: (name: string, store: Store, quantity: number, unit: string, urgency: Urgency, memo?: string) => void;
   onLongPress: (item: ShoppingItem) => void;
 }
 
