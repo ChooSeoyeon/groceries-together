@@ -1,5 +1,6 @@
 import { ShoppingItem } from '@/types/shopping';
 import { useRef, useCallback, useEffect } from 'react';
+import memoIcon from '@/assets/memo-icon.png';
 
 interface ItemCardProps {
   item: ShoppingItem;
@@ -62,7 +63,7 @@ export function ItemCard({ item, onLongPress, onShortPress, disabled }: ItemCard
         {item.quantity}{item.unit}
       </span>
       {item.memo && (
-        <span className="absolute bottom-1 right-1 text-[7px] opacity-40">📝</span>
+        <img src={memoIcon} alt="memo" className="absolute top-1 right-1 w-3.5 h-3.5 opacity-50" />
       )}
     </div>
   );
