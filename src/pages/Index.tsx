@@ -135,7 +135,7 @@ const Index = () => {
                       item={item}
                       onShortPress={handleShortPress}
                       onLongPress={handleLongPress}
-                      drawerOpen={drawerOpen}
+                      
                     />
                   ))}
                 </div>
