@@ -99,7 +99,7 @@ const Index = () => {
       </section>
 
       {/* History */}
-      <section className="px-4 mt-6">
+      <section className={`px-4 mt-6 ${drawerOpen ? 'pointer-events-none' : ''}`}>
         <div className="flex items-center gap-2 mb-3">
           <History className="w-4 h-4 text-muted-foreground" />
           <h2 className="text-sm font-semibold text-muted-foreground">
