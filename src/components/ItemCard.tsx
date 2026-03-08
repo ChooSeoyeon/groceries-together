@@ -1,5 +1,6 @@
 import { ShoppingItem } from '@/types/shopping';
 import { useRef, useCallback, useEffect } from 'react';
+import memoIcon from '@/assets/memo-icon.png';
 
 interface ItemCardProps {
   item: ShoppingItem;
