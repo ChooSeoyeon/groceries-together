@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { STORES, Store } from '@/types/shopping';
 import { useShoppingList } from '@/hooks/useShoppingList';
 import { ItemCard } from '@/components/ItemCard';
 import { ItemDetailDrawer } from '@/components/ItemDetailDrawer';
 import { AddItemDrawer } from '@/components/AddItemDrawer';
 import { ShoppingItem, STORE_BADGE_CLASS } from '@/types/shopping';
-import { History } from 'lucide-react';
+import { History, Undo2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 const Index = () => {
   const { items, activeItems, historyItems, addItem, checkItem, uncheckItem, deleteItem, updateItem } = useShoppingList();
