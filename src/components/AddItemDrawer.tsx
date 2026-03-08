@@ -31,8 +31,8 @@ export function AddItemDrawer({ onAdd }: AddItemDrawerProps) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button size="icon" className="rounded-full fixed bottom-4 right-4 h-12 w-12 shadow-lg z-50">
-          <Plus className="w-5 h-5" />
+        <Button size="icon" className="rounded-full fixed bottom-5 right-5 h-11 w-11 shadow-md z-50 p-0">
+          <Plus className="w-4 h-4" />
         </Button>
       </DrawerTrigger>
       <DrawerContent className="max-w-md mx-auto px-4 pb-6">
