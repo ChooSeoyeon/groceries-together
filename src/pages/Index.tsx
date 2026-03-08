@@ -40,6 +40,7 @@ const Index = () => {
   }, [] as { store: Store; items: ShoppingItem[] }[]);
 
   const handleShortPress = (item: ShoppingItem) => {
+    if (Date.now() - drawerClosedAt.current < 400) return;
     if (item.inCart) {
       uncheckItem(item.id);
     } else {
