@@ -118,9 +118,6 @@ export function ItemDetailDrawer({ item, open, onClose, onUpdate, onDelete, onCh
           </div>
 
           <div className="flex gap-1.5 pt-1">
-            <Button onClick={handleSave} className="flex-1 rounded-full h-9 text-sm">
-              <Check className="w-3.5 h-3.5 mr-1" /> 저장
-            </Button>
             <Button variant="destructive" size="icon" className="rounded-full h-9 w-9" onClick={() => { onDelete(item.id); onClose(); }}>
               <Trash2 className="w-3.5 h-3.5" />
             </Button>
