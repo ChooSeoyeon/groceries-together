@@ -56,6 +56,7 @@ const Index = () => {
   };
 
   const handleLongPress = (item: ShoppingItem) => {
+    if (Date.now() - drawerClosedAt.current < 400) return;
     setDetailItem(item);
     setDrawerOpen(true);
   };
