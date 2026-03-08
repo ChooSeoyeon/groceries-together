@@ -39,7 +39,7 @@ export function ItemDetailDrawer({ item, open, onClose, onUpdate, onDelete, onCh
   if (!item) return null;
 
   const handleClose = () => {
-    onUpdate(item.id, { name, quantity, unit, store, urgency });
+    onUpdate(item.id, { name, quantity, unit, store, urgency, memo: memo.trim() || undefined });
     onClose();
   };
 
