@@ -27,16 +27,16 @@ const Index = () => {
   }, [] as { store: Store; items: ShoppingItem[] }[]);
 
   const handleShortPress = (item: ShoppingItem) => {
-    setDetailItem(item);
-    setDrawerOpen(true);
-  };
-
-  const handleLongPress = (item: ShoppingItem) => {
     if (item.inCart) {
       uncheckItem(item.id);
     } else {
       checkItem(item.id);
     }
+  };
+
+  const handleLongPress = (item: ShoppingItem) => {
+    setDetailItem(item);
+    setDrawerOpen(true);
   };
 
   return (
