@@ -83,7 +83,7 @@ const Index = () => {
                 {store === '터키' ? getTurkiDisplayName() : store}
                 <span className="text-xs font-normal text-muted-foreground">({storeItems.length})</span>
               </h2>
-              <div className="grid grid-cols-4 gap-1.5">
+              <div className="grid grid-cols-3 gap-1.5">
                 {storeItems.map(item => (
                   <ItemCard
                     key={item.id}
