@@ -121,7 +121,7 @@ const Index = () => {
                   <span className={`inline-block w-3 h-3 rounded-full ${STORE_BADGE_CLASS[store]}`} />
                   {store === '터키' ? getTurkiDisplayName() : store}
                   <span className="text-xs font-normal text-muted-foreground">({storeHistoryItems.length})</span>
-                </h2>
+                </h3>
                 <div className="grid grid-cols-3 gap-1.5">
                   {storeHistoryItems.map(item => (
                     <ItemCard
