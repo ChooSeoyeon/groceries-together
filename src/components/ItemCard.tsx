@@ -35,9 +35,11 @@ export function ItemCard({ item, onLongPress, onShortPress }: ItemCardProps) {
     return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, []);
 
-  const urgencyClasses = item.urgency === 'urgent'
-    ? 'bg-urgent-card text-urgent-card-foreground'
-    : 'bg-relaxed-card text-relaxed-card-foreground';
+  const cardClasses = item.inCart
+    ? 'bg-[hsl(var(--history-card))] text-[hsl(var(--history-card-foreground))]'
+    : item.urgency === 'urgent'
+      ? 'bg-urgent-card text-urgent-card-foreground'
+      : 'bg-relaxed-card text-relaxed-card-foreground';
 
   return (
     <div
@@ -48,8 +50,7 @@ export function ItemCard({ item, onLongPress, onShortPress }: ItemCardProps) {
       onMouseUp={handleEnd}
       className={`relative flex flex-col items-center justify-center aspect-square rounded-xl
         transition-all active:scale-95 cursor-pointer select-none
-        ${urgencyClasses}
-        ${item.inCart ? 'opacity-70' : ''}`}
+        ${cardClasses}`}
     >
       <span className="text-xs font-semibold text-center leading-tight line-clamp-2 px-1">
         {item.name}
