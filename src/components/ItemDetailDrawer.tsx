@@ -32,6 +32,7 @@ export function ItemDetailDrawer({ item, open, onClose, onUpdate, onDelete, onCh
       setUnit(item.unit);
       setStore(item.store);
       setUrgency(item.urgency);
+      setMemo(item.memo || '');
     }
   }, [item]);
 
