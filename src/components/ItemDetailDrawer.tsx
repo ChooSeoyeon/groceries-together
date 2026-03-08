@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useState, useEffect } from 'react';
-import { Minus, Plus, Trash2, RotateCcw, Check } from 'lucide-react';
+import { Minus, Plus, Trash2, RotateCcw, Check, X } from 'lucide-react';
 
 interface ItemDetailDrawerProps {
   item: ShoppingItem | null;
@@ -54,7 +54,18 @@ export function ItemDetailDrawer({ item, open, onClose, onUpdate, onDelete, onCh
         <div className="space-y-3">
           <div>
             <label className="text-[10px] font-medium text-muted-foreground mb-1 block">이름</label>
-            <Input value={name} onChange={e => setName(e.target.value)} className="bg-secondary border-0 h-9 text-sm" />
+            <div className="relative">
+              <Input value={name} onChange={e => setName(e.target.value)} className="bg-secondary border-0 h-9 text-sm pr-8" />
+              {name && (
+                <button
+                  type="button"
+                  onClick={() => setName('')}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
           </div>
 
           <div>
