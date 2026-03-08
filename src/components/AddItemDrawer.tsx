@@ -36,12 +36,13 @@ export function AddItemDrawer({ onAdd, open: controlledOpen, onOpenChange, prefi
 
   const handleAdd = () => {
     if (!name.trim()) return;
-    onAdd(name.trim(), store, quantity, unit, urgency);
+    onAdd(name.trim(), store, quantity, unit, urgency, memo.trim() || undefined);
     setName('');
     setQuantity(1);
     setUnit('개');
     setStore('아무데나');
     setUrgency('relaxed');
+    setMemo('');
     setOpen(false);
   };
 
