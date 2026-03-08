@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+[data-sonner-toaster] {
+  --width: 50vw !important;
+}
+
+[data-sonner-toaster] [data-sonner-toast] {
+  width: 50vw !important;
+  max-width: 50vw !important;
+}
+
 @layer base {
   :root {
     --background: 36 33% 97%;
