@@ -1,6 +1,9 @@
 import { ShoppingItem } from '@/types/shopping';
 import { useRef, useCallback } from 'react';
 
+// Global flag to prevent short press on neighboring items after a long press
+let longPressJustFired = false;
+
 interface ItemCardProps {
   item: ShoppingItem;
   onLongPress: (item: ShoppingItem) => void;
@@ -17,8 +20,11 @@ export function ItemCard({ item, onLongPress, onShortPress }: ItemCardProps) {
     startPos.current = { x: clientX, y: clientY };
     timerRef.current = setTimeout(() => {
       isLongPress.current = true;
+      longPressJustFired = true;
       onLongPress(item);
       if (navigator.vibrate) navigator.vibrate(50);
+      // Reset global flag after a short delay
+      setTimeout(() => { longPressJustFired = false; }, 300);
     }, 500);
   }, [item, onLongPress]);
 
@@ -32,7 +38,7 @@ export function ItemCard({ item, onLongPress, onShortPress }: ItemCardProps) {
 
   const handleEnd = useCallback(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
-    if (!isLongPress.current) {
+    if (!isLongPress.current && !longPressJustFired) {
       onShortPress(item);
     }
   }, [item, onShortPress]);
