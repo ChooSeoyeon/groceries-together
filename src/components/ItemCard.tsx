@@ -55,7 +55,7 @@ export function ItemCard({ item, onLongPress, onShortPress }: ItemCardProps) {
         {item.name}
       </span>
       <span className="text-[10px] opacity-60 mt-0.5">
-        {item.quantity}
+        {item.quantity}개
       </span>
     </div>
   );
