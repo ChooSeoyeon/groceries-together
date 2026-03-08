@@ -54,7 +54,6 @@ const Index = () => {
   };
 
   const handleLongPress = (item: ShoppingItem) => {
-    if (isDrawerCooldown()) return;
     setDetailItem(item);
     setDrawerOpen(true);
   };
