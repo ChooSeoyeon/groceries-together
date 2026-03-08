@@ -2,20 +2,33 @@ import { STORES, Store, UNITS, STORE_BADGE_CLASS } from '@/types/shopping';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus, Minus } from 'lucide-react';
 
 interface AddItemDrawerProps {
   onAdd: (name: string, store: Store, quantity: number, unit: string, urgency: 'urgent' | 'relaxed') => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  prefillName?: string;
 }
 
-export function AddItemDrawer({ onAdd }: AddItemDrawerProps) {
-  const [open, setOpen] = useState(false);
+export function AddItemDrawer({ onAdd, open: controlledOpen, onOpenChange, prefillName }: AddItemDrawerProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const setOpen = isControlled ? (onOpenChange ?? (() => {})) : setInternalOpen;
+  
   const [name, setName] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [unit, setUnit] = useState('개');
   const [store, setStore] = useState<Store>('아무데나');
   const [urgency, setUrgency] = useState<'urgent' | 'relaxed'>('relaxed');
+  
+  useEffect(() => {
+    if (open && prefillName) {
+      setName(prefillName);
+    }
+  }, [open, prefillName]);
 
   const handleAdd = () => {
     if (!name.trim()) return;
@@ -30,11 +43,13 @@ export function AddItemDrawer({ onAdd }: AddItemDrawerProps) {
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
-        <Button size="icon" className="rounded-full h-11 w-11 shadow-md z-50 p-0">
-          <Plus className="w-4 h-4" />
-        </Button>
-      </DrawerTrigger>
+      {!isControlled && (
+        <DrawerTrigger asChild>
+          <Button size="icon" className="rounded-full h-11 w-11 shadow-md z-50 p-0">
+            <Plus className="w-4 h-4" />
+          </Button>
+        </DrawerTrigger>
+      )}
       <DrawerContent className="max-w-md mx-auto px-4 pb-6">
         <DrawerHeader className="px-0 pb-2">
           <DrawerTitle className="text-left text-sm">물건 추가</DrawerTitle>
