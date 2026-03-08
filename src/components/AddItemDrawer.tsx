@@ -26,6 +26,7 @@ export function AddItemDrawer({ onAdd, open: controlledOpen, onOpenChange, prefi
   const [unit, setUnit] = useState('개');
   const [store, setStore] = useState<Store>('아무데나');
   const [urgency, setUrgency] = useState<'urgent' | 'relaxed'>('relaxed');
+  const [memo, setMemo] = useState('');
   
   useEffect(() => {
     if (open && prefillName) {
