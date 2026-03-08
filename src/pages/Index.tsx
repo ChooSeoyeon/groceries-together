@@ -61,7 +61,6 @@ const Index = () => {
   const handleDrawerClose = () => {
     setDrawerOpen(false);
     setDetailItem(null);
-    drawerClosedAt.current = Date.now();
   };
 
   return (
