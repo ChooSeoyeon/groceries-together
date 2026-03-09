@@ -68,16 +68,16 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-24 max-w-md mx-auto relative">
+    <div className="h-dvh bg-background max-w-md mx-auto relative flex flex-col overflow-hidden">
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-lg pt-safe">
+      <header className="shrink-0 bg-background/80 backdrop-blur-lg pt-safe z-40">
         <div className="px-4 pt-3 pb-2">
           <h1 className="text-lg font-bold">🛒 우리집 장보기</h1>
-          
         </div>
       </header>
 
-      {/* Shopping List grouped by store */}
+      {/* Scrollable content */}
+      <div className="flex-1 overflow-y-auto pb-16">
       <section className="px-4 mt-2">
         {groupedActive.length === 0 ? (
           <div className="text-center py-16 text-muted-foreground text-sm">
@@ -144,6 +144,7 @@ const Index = () => {
           })
         )}
       </section>
+      </div>
 
       {/* Drawers */}
       <ItemDetailDrawer
