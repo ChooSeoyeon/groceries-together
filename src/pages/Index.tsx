@@ -76,7 +76,8 @@ const Index = () => {
         </div>
       </header>
 
-      {/* Shopping List grouped by store */}
+      {/* Scrollable content */}
+      <div className="flex-1 overflow-y-auto pb-16">
       <section className="px-4 mt-2">
         {groupedActive.length === 0 ? (
           <div className="text-center py-16 text-muted-foreground text-sm">
