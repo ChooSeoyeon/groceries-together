@@ -98,7 +98,8 @@ export function SearchBar({ items, onUncheck, onAdd, onLongPress }: SearchBarPro
               onChange={e => setQuery(e.target.value)}
               onFocus={() => setFocused(true)}
               placeholder="검색 또는 추가..."
-              className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+              className="flex-1 bg-transparent text-base outline-none placeholder:text-muted-foreground"
+              style={{ fontSize: '16px' }}
             />
             {trimmed && (
               <button onClick={() => setQuery('')}>
