@@ -70,10 +70,9 @@ const Index = () => {
   return (
     <div className="h-dvh bg-background max-w-md mx-auto relative flex flex-col overflow-hidden">
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-lg pt-safe">
+      <header className="shrink-0 bg-background/80 backdrop-blur-lg pt-safe z-40">
         <div className="px-4 pt-3 pb-2">
           <h1 className="text-lg font-bold">🛒 우리집 장보기</h1>
-          
         </div>
       </header>
 
