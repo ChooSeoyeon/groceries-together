@@ -90,7 +90,7 @@ export function SearchBar({ items, onUncheck, onAdd, onLongPress }: SearchBarPro
       {/* Search bar */}
       <div className="absolute bottom-0 left-0 right-0 z-50 px-4 pb-3 pt-2 bg-background/80 backdrop-blur-lg overflow-hidden">
         <div className="flex items-center gap-2">
-          <div className="flex-1 min-w-0 flex items-center bg-secondary rounded-full px-3 h-10 gap-2">
+          <div className="flex-1 min-w-0 flex items-center bg-secondary rounded-full px-3 h-10 gap-2 overflow-hidden">
             <Search className="w-4 h-4 text-muted-foreground shrink-0" />
             <input
               ref={inputRef}
@@ -98,11 +98,11 @@ export function SearchBar({ items, onUncheck, onAdd, onLongPress }: SearchBarPro
               onChange={e => setQuery(e.target.value)}
               onFocus={() => setFocused(true)}
               placeholder="검색 또는 추가..."
-              className="flex-1 bg-transparent text-base outline-none placeholder:text-muted-foreground"
+              className="flex-1 min-w-0 bg-transparent text-base outline-none placeholder:text-muted-foreground"
               style={{ fontSize: '16px' }}
             />
             {trimmed && (
-              <button onClick={() => setQuery('')}>
+              <button onClick={() => setQuery('')} className="shrink-0">
                 <X className="w-4 h-4 text-muted-foreground" />
               </button>
             )}
