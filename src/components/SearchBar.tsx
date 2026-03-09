@@ -88,7 +88,7 @@ export function SearchBar({ items, onUncheck, onAdd, onLongPress }: SearchBarPro
       )}
 
       {/* Search bar */}
-      <div className="absolute bottom-0 left-0 right-0 z-50 px-4 pb-3 pt-2 bg-background/80 backdrop-blur-lg">
+      <div className="absolute bottom-0 left-0 right-0 z-50 px-4 pb-3 pt-2 bg-background/80 backdrop-blur-lg overflow-hidden">
         <div className="flex items-center gap-2">
           <div className="flex-1 flex items-center bg-secondary rounded-full px-3 h-10 gap-2">
             <Search className="w-4 h-4 text-muted-foreground shrink-0" />
