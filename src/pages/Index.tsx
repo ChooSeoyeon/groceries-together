@@ -144,6 +144,7 @@ const Index = () => {
           })
         )}
       </section>
+      </div>
 
       {/* Drawers */}
       <ItemDetailDrawer
