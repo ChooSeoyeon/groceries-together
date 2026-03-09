@@ -53,7 +53,7 @@ export function AddItemDrawer({ onAdd, open: controlledOpen, onOpenChange, prefi
           </Button>
         </DrawerTrigger>
       )}
-      <DrawerContent className="max-w-md mx-auto px-4 pb-6">
+      <DrawerContent className="max-w-md mx-auto px-4 pb-6 max-h-[85dvh] overflow-y-auto">
         <DrawerHeader className="px-0 pb-2">
           <DrawerTitle className="text-left text-sm">물건 추가</DrawerTitle>
         </DrawerHeader>
