@@ -101,7 +101,6 @@ export function SearchBar({ items, onUncheck, onAdd, onLongPress }: SearchBarPro
               className="flex-1 bg-transparent text-base outline-none placeholder:text-muted-foreground"
               style={{ fontSize: '16px' }}
             />
-            />
             {trimmed && (
               <button onClick={() => setQuery('')}>
                 <X className="w-4 h-4 text-muted-foreground" />
