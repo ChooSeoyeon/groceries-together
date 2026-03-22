@@ -25,7 +25,7 @@ export function useShoppingList() {
 
   const addItem = useCallback((name: string, store: Store, quantity: number, unit: string, urgency: Urgency, memo?: string) => {
     const newItem: ShoppingItem = {
-      id: crypto.randomUUID(),
+      id: crypto.randomUUID?.() ?? Math.random().toString(36).slice(2) + Date.now().toString(36),
       name,
       store,
       quantity,

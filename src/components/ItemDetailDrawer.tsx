@@ -145,7 +145,7 @@ export function ItemDetailDrawer({ item, open, onClose, onUpdate, onDelete, onCh
 
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="destructive" className="w-full rounded-full h-9 text-sm opacity-60">
+              <Button variant="destructive" className="w-full rounded-full h-9 text-sm">
                 <Trash2 className="w-3.5 h-3.5 mr-1" /> 삭제하기
               </Button>
             </AlertDialogTrigger>

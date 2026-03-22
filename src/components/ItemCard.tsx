@@ -12,9 +12,11 @@ interface ItemCardProps {
 export function ItemCard({ item, onLongPress, onShortPress, disabled }: ItemCardProps) {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isLongPress = useRef(false);
+  const hasMoved = useRef(false);
 
   const handleStart = useCallback(() => {
     isLongPress.current = false;
+    hasMoved.current = false;
     timerRef.current = setTimeout(() => {
       isLongPress.current = true;
       onLongPress(item);
@@ -23,12 +25,13 @@ export function ItemCard({ item, onLongPress, onShortPress, disabled }: ItemCard
   }, [item, onLongPress]);
 
   const handleMove = useCallback(() => {
+    hasMoved.current = true;
     if (timerRef.current) clearTimeout(timerRef.current);
   }, []);
 
   const handleEnd = useCallback(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
-    if (!isLongPress.current) {
+    if (!isLongPress.current && !hasMoved.current) {
       onShortPress(item);
     }
   }, [item, onShortPress]);

@@ -53,12 +53,12 @@ export function AddItemDrawer({ onAdd, open: controlledOpen, onOpenChange, prefi
           </Button>
         </DrawerTrigger>
       )}
-      <DrawerContent className="max-w-md mx-auto px-4 pb-6 max-h-[85dvh] overflow-y-auto">
+      <DrawerContent className="max-w-md mx-auto px-4 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
         <DrawerHeader className="px-0 pb-2">
           <DrawerTitle className="text-left text-sm">물건 추가</DrawerTitle>
         </DrawerHeader>
 
-        <div className="space-y-3">
+        <div className="space-y-3 overflow-y-auto max-h-[70dvh] p-1" onPointerDown={(e) => e.stopPropagation()}>
           <div>
             <label className="text-[10px] font-medium text-muted-foreground mb-1 block">이름</label>
             <div className="relative">
@@ -67,7 +67,6 @@ export function AddItemDrawer({ onAdd, open: controlledOpen, onOpenChange, prefi
                 onChange={e => setName(e.target.value)}
                 placeholder="물건 이름"
                 className="bg-secondary border-0 h-9 text-sm pr-8"
-                autoFocus
                 onKeyDown={e => e.key === 'Enter' && handleAdd()}
               />
               {name && (
@@ -157,10 +156,15 @@ export function AddItemDrawer({ onAdd, open: controlledOpen, onOpenChange, prefi
             />
           </div>
 
-          <Button onClick={handleAdd} className="w-full rounded-full h-9 text-sm" disabled={!name.trim()}>
-            추가하기
-          </Button>
         </div>
+        <Button
+          onClick={handleAdd}
+          onPointerDown={(e) => e.stopPropagation()}
+          className="w-full rounded-full h-9 text-sm mt-3"
+          disabled={!name.trim()}
+        >
+          추가하기
+        </Button>
       </DrawerContent>
     </Drawer>
   );

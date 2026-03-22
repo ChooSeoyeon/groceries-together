@@ -60,6 +60,7 @@
     --store-edeka: 45 80% 50%;
     --store-lidl: 210 70% 45%;
     --store-penny: 15 80% 50%;
+    --store-aldi: 185 65% 40%;
     --store-any: 25 10% 55%;
 
     --sidebar-background: 0 0% 98%;
@@ -92,5 +93,6 @@
   .store-badge-edeka { background-color: hsl(var(--store-edeka)); color: white; }
   .store-badge-lidl { background-color: hsl(var(--store-lidl)); color: white; }
   .store-badge-penny { background-color: hsl(var(--store-penny)); color: white; }
+  .store-badge-aldi { background-color: hsl(var(--store-aldi)); color: white; }
   .store-badge-any { background-color: hsl(var(--store-any)); color: white; }
 }
