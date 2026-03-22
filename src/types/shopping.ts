@@ -10,9 +10,9 @@ export interface ShoppingItem {
   unit: string;
   urgency: Urgency;
   memo?: string;
-  inCart: boolean; // false = shopping list, true = history
-  checkedAt?: number; // timestamp when moved to history
-  createdAt: number;
+  inCart: boolean; // true = cart (사야 할 것), false = history (이미 산 것)
+  checkedAt?: string; // ISO timestamp, 히스토리로 이동된 시각
+  createdAt: string;  // ISO timestamp
 }
 
 export const STORES: Store[] = ['터키', 'D마트', '고아시아', '에데카', '리들', '페니', '알디', '아무데나'];

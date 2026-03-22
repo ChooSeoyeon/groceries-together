@@ -1,67 +1,81 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ShoppingItem, Store, Urgency } from '@/types/shopping';
+import { api } from '@/lib/api';
 
-const STORAGE_KEY = 'shopping-list-v1';
+const QUERY_KEY = ['items'] as const;
+const POLL_INTERVAL = 5000;
 
-function loadItems(): ShoppingItem[] {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveItems(items: ShoppingItem[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+function toShoppingItem(raw: Record<string, unknown>): ShoppingItem {
+  return {
+    id: raw.id as string,
+    name: raw.name as string,
+    store: raw.store as Store,
+    quantity: Number(raw.quantity),
+    unit: raw.unit as string,
+    urgency: raw.urgency as Urgency,
+    memo: raw.memo as string | undefined,
+    inCart: raw.inCart as boolean,
+    checkedAt: raw.checkedAt as string | undefined,
+    createdAt: raw.createdAt as string,
+  };
 }
 
 export function useShoppingList() {
-  const [items, setItems] = useState<ShoppingItem[]>(loadItems);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    saveItems(items);
-  }, [items]);
+  const { data: items = [] } = useQuery({
+    queryKey: QUERY_KEY,
+    queryFn: async () => {
+      const res = await api.items.list();
+      return (res.data as Record<string, unknown>[]).map(toShoppingItem);
+    },
+    refetchInterval: POLL_INTERVAL,
+  });
 
-  const addItem = useCallback((name: string, store: Store, quantity: number, unit: string, urgency: Urgency, memo?: string) => {
-    const newItem: ShoppingItem = {
-      id: crypto.randomUUID?.() ?? Math.random().toString(36).slice(2) + Date.now().toString(36),
-      name,
-      store,
-      quantity,
-      unit,
-      urgency,
-      memo: memo || undefined,
-      inCart: false,
-      createdAt: Date.now(),
-    };
-    setItems(prev => [newItem, ...prev]);
-  }, []);
+  const activeItems = items.filter(i => i.inCart);
+  const historyItems = items
+    .filter(i => !i.inCart)
+    .sort((a, b) => new Date(b.checkedAt ?? 0).getTime() - new Date(a.checkedAt ?? 0).getTime());
 
-  const checkItem = useCallback((id: string) => {
-    setItems(prev => prev.map(item =>
-      item.id === id ? { ...item, inCart: true, checkedAt: Date.now() } : item
-    ));
-  }, []);
+  const addItem = useMutation({
+    mutationFn: (args: { name: string; store: Store; quantity: number; unit: string; urgency: Urgency; memo?: string }) =>
+      api.items.create(args),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
+  }).mutate;
 
-  const uncheckItem = useCallback((id: string) => {
-    setItems(prev => prev.map(item =>
-      item.id === id ? { ...item, inCart: false, checkedAt: undefined } : item
-    ));
-  }, []);
+  const checkItem = useMutation({
+    mutationFn: (id: string) => api.items.update(id, { inCart: false }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
+  }).mutate;
 
-  const deleteItem = useCallback((id: string) => {
-    setItems(prev => prev.filter(item => item.id !== id));
-  }, []);
+  const uncheckItem = useMutation({
+    mutationFn: (id: string) => api.items.update(id, { inCart: true }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
+  }).mutate;
 
-  const updateItem = useCallback((id: string, updates: Partial<Pick<ShoppingItem, 'name' | 'store' | 'quantity' | 'unit' | 'urgency' | 'memo'>>) => {
-    setItems(prev => prev.map(item =>
-      item.id === id ? { ...item, ...updates } : item
-    ));
-  }, []);
+  const deleteItem = useMutation({
+    mutationFn: (id: string) => api.items.delete(id),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
+  }).mutate;
 
-  const activeItems = items.filter(i => !i.inCart);
-  const historyItems = items.filter(i => i.inCart).sort((a, b) => (b.checkedAt ?? 0) - (a.checkedAt ?? 0));
+  const updateItem = useMutation({
+    mutationFn: ({ id, updates }: {
+      id: string;
+      updates: Partial<Pick<ShoppingItem, 'name' | 'store' | 'quantity' | 'unit' | 'urgency' | 'memo'>>;
+    }) => api.items.update(id, updates),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
+  });
 
-  return { items, activeItems, historyItems, addItem, checkItem, uncheckItem, deleteItem, updateItem };
+  return {
+    items,
+    activeItems,
+    historyItems,
+    addItem: (name: string, store: Store, quantity: number, unit: string, urgency: Urgency, memo?: string) =>
+      addItem({ name, store, quantity, unit, urgency, memo }),
+    checkItem: (id: string) => checkItem(id),
+    uncheckItem: (id: string) => uncheckItem(id),
+    deleteItem: (id: string) => deleteItem(id),
+    updateItem: (id: string, updates: Partial<Pick<ShoppingItem, 'name' | 'store' | 'quantity' | 'unit' | 'urgency' | 'memo'>>) =>
+      updateItem.mutate({ id, updates }),
+  };
 }
