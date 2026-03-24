@@ -90,11 +90,7 @@ func (s *ItemStore) Update(id string, input UpdateItemInput) (ShoppingItem, erro
 	// checked_at: inCart이 false로 바뀌면 현재 시각, true로 바뀌면 NULL
 	var checkedAtExpr string
 	if input.InCart != nil {
-		if *input.InCart {
-			checkedAtExpr = ", checked_at = NULL"
-		} else {
-			checkedAtExpr = ", checked_at = NOW()"
-		}
+		checkedAtExpr = ", checked_at = NOW()"
 	}
 
 	query := `

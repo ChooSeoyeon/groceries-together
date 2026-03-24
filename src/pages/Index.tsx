@@ -31,9 +31,9 @@ const Index = () => {
     const storeItems = activeItems
       .filter(i => i.store === store)
       .sort((a, b) => {
-        if (a.urgency === 'urgent' && b.urgency !== 'urgent') return -1;
-        if (a.urgency !== 'urgent' && b.urgency === 'urgent') return 1;
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        const aTime = a.checkedAt ? new Date(a.checkedAt).getTime() : new Date(a.createdAt).getTime();
+        const bTime = b.checkedAt ? new Date(b.checkedAt).getTime() : new Date(b.createdAt).getTime();
+        return bTime - aTime;
       });
     if (storeItems.length > 0) acc.push({ store, items: storeItems });
     return acc;
