@@ -33,7 +33,7 @@ const Index = () => {
       .sort((a, b) => {
         if (a.urgency === 'urgent' && b.urgency !== 'urgent') return -1;
         if (a.urgency !== 'urgent' && b.urgency === 'urgent') return 1;
-        return b.createdAt - a.createdAt;
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       });
     if (storeItems.length > 0) acc.push({ store, items: storeItems });
     return acc;
@@ -41,7 +41,7 @@ const Index = () => {
 
   const handleShortPress = (item: ShoppingItem) => {
     if (Date.now() - drawerClosedAt.current < 300) return;
-    if (item.inCart) {
+    if (!item.inCart) {
       uncheckItem(item.id);
     } else {
       checkItem(item.id);

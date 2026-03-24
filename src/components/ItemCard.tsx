@@ -42,7 +42,7 @@ export function ItemCard({ item, onLongPress, onShortPress, disabled }: ItemCard
 
   const cardClasses = disabled
     ? 'bg-background border-2 border-dashed border-muted-foreground/30 text-muted-foreground'
-    : item.inCart
+    : !item.inCart
       ? 'bg-[hsl(var(--history-card))] text-[hsl(var(--history-card-foreground))]'
       : item.urgency === 'urgent'
         ? 'bg-urgent-card text-urgent-card-foreground'
