@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { Search, X } from 'lucide-react';
 import { ShoppingItem } from '@/types/shopping';
 import { ItemCard } from '@/components/ItemCard';
@@ -18,23 +18,6 @@ export function SearchBar({ items, onUncheck, onAdd, onLongPress }: SearchBarPro
   const [addDrawerOpen, setAddDrawerOpen] = useState(false);
   const [prefillName, setPrefillName] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
-  const barRef = useRef<HTMLDivElement>(null);
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
-
-  useEffect(() => {
-    const vv = window.visualViewport;
-    if (!vv) return;
-    const update = () => {
-      const kh = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
-      setKeyboardHeight(kh);
-    };
-    vv.addEventListener('resize', update);
-    vv.addEventListener('scroll', update);
-    return () => {
-      vv.removeEventListener('resize', update);
-      vv.removeEventListener('scroll', update);
-    };
-  }, []);
 
   const trimmed = query.trim();
 
@@ -77,45 +60,40 @@ export function SearchBar({ items, onUncheck, onAdd, onLongPress }: SearchBarPro
         <div className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm" onClick={handleCancel} />
       )}
 
-      {/* Search results */}
-      {isActive && trimmed && (
-        <div
-          className="fixed left-0 right-0 z-50 max-w-md mx-auto px-4 pb-2 max-h-[60vh] overflow-y-auto"
-          style={{ bottom: keyboardHeight + (barRef.current?.offsetHeight ?? 60) }}
-        >
-          <div className="grid grid-cols-3 gap-1.5">
-            {results.map(item => (
-              <div key={item.id} className={item.inCart ? 'search-disabled-item' : ''}>
-                <ItemCard
-                  item={item}
-                  onShortPress={handleResultPress}
-                  onLongPress={onLongPress}
-                  disabled={item.inCart}
-                />
-              </div>
-            ))}
-          </div>
-          {/* Show create button only if no exact name match */}
-          {!items.some(i => i.name === trimmed) && (
-            <button
-              onClick={handleCreateNew}
-              className="w-full py-3 mt-2 rounded-xl bg-secondary text-secondary-foreground text-sm font-medium"
-            >
-              "{trimmed}" 새로 추가하기 +
-            </button>
-          )}
-        </div>
-      )}
+      {/* Search bar + results stacked together */}
+      <div className="absolute bottom-0 left-0 right-0 z-50 flex flex-col">
 
-      {/* Search bar */}
-      <div
-        ref={barRef}
-        className="fixed left-0 right-0 z-50 px-4 pt-2 bg-background/80 backdrop-blur-lg overflow-hidden"
-        style={{
-          bottom: keyboardHeight,
-          paddingBottom: keyboardHeight > 0 ? '8px' : 'max(12px, env(safe-area-inset-bottom))',
-        }}
-      >
+        {/* Search results - sits above search bar via flex-col */}
+        {isActive && trimmed && (
+          <div className="px-4 pb-2 max-h-[55vh] overflow-y-auto">
+            <div className="grid grid-cols-3 gap-1.5">
+              {results.map(item => (
+                <div key={item.id} className={item.inCart ? 'search-disabled-item' : ''}>
+                  <ItemCard
+                    item={item}
+                    onShortPress={handleResultPress}
+                    onLongPress={onLongPress}
+                    disabled={item.inCart}
+                  />
+                </div>
+              ))}
+            </div>
+            {!items.some(i => i.name === trimmed) && (
+              <button
+                onClick={handleCreateNew}
+                className="w-full py-3 mt-2 rounded-xl bg-secondary text-secondary-foreground text-sm font-medium"
+              >
+                "{trimmed}" 새로 추가하기 +
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Search bar */}
+        <div
+          className="px-4 pt-2 bg-background/80 backdrop-blur-lg overflow-hidden"
+          style={{ paddingBottom: isActive ? '8px' : 'max(12px, env(safe-area-inset-bottom))' }}
+        >
         <div className="flex items-center gap-2">
           <div className="flex-1 min-w-0 flex items-center bg-secondary rounded-full px-3 h-10 gap-2 overflow-hidden">
             <Search className="w-4 h-4 text-muted-foreground shrink-0" />
@@ -140,7 +118,8 @@ export function SearchBar({ items, onUncheck, onAdd, onLongPress }: SearchBarPro
             </button>
           )}
         </div>
-      </div>
+        </div>
+      </div>{/* end absolute bottom-0 flex-col */}
 
       {/* AddItemDrawer for creating new */}
       <AddItemDrawer

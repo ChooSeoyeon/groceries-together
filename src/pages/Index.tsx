@@ -101,23 +101,24 @@ const Index = () => {
         </div>
       </header>
 
+      {/* Pull-to-refresh spinner (fixed at top, not clipped) */}
+      {pullY > 0 && (
+        <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none" style={{ paddingTop: 'max(20px, env(safe-area-inset-top))' }}>
+          <div
+            className="w-7 h-7 mt-2 rounded-full border-2 border-primary border-t-transparent"
+            style={{ transform: `rotate(${pullY * 5.6}deg)` }}
+          />
+        </div>
+      )}
+
       {/* Scrollable content */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto pb-16 relative"
+        className="flex-1 overflow-y-auto pb-16"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
-        style={{ transform: pullY > 0 ? `translateY(${pullY}px)` : undefined, transition: pullY === 0 ? 'transform 0.2s' : 'none' }}
       >
-        {pullY > 0 && (
-          <div className="absolute -top-10 left-0 right-0 flex justify-center items-center h-10 pointer-events-none">
-            <div
-              className="w-6 h-6 rounded-full border-2 border-primary border-t-transparent"
-              style={{ transform: `rotate(${pullY * 5.6}deg)` }}
-            />
-          </div>
-        )}
       <section className="px-4 mt-2">
         {groupedActive.length === 0 ? (
           <div className="text-center py-16 text-muted-foreground text-sm">
