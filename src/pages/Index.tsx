@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { STORES, Store } from '@/types/shopping';
 import { useShoppingList } from '@/hooks/useShoppingList';
 import { ItemCard } from '@/components/ItemCard';
@@ -25,6 +25,31 @@ const Index = () => {
   const [detailItem, setDetailItem] = useState<ShoppingItem | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const drawerClosedAt = useRef(0);
+
+  const PULL_THRESHOLD = 64;
+  const [pullY, setPullY] = useState(0);
+  const touchStartY = useRef(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    if ((scrollRef.current?.scrollTop ?? 0) === 0) {
+      touchStartY.current = e.touches[0].clientY;
+    } else {
+      touchStartY.current = 0;
+    }
+  }, []);
+
+  const onTouchMove = useCallback((e: React.TouchEvent) => {
+    if (touchStartY.current === 0) return;
+    const dy = e.touches[0].clientY - touchStartY.current;
+    if (dy > 0) setPullY(Math.min(dy * 0.5, PULL_THRESHOLD));
+  }, []);
+
+  const onTouchEnd = useCallback(() => {
+    if (pullY >= PULL_THRESHOLD) window.location.reload();
+    else setPullY(0);
+    touchStartY.current = 0;
+  }, [pullY]);
 
   // Group active items by store
   const groupedActive = STORES.reduce((acc, store) => {
@@ -77,7 +102,22 @@ const Index = () => {
       </header>
 
       {/* Scrollable content */}
-      <div className="flex-1 overflow-y-auto pb-16">
+      <div
+        ref={scrollRef}
+        className="flex-1 overflow-y-auto pb-16 relative"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        style={{ transform: pullY > 0 ? `translateY(${pullY}px)` : undefined, transition: pullY === 0 ? 'transform 0.2s' : 'none' }}
+      >
+        {pullY > 0 && (
+          <div className="absolute -top-10 left-0 right-0 flex justify-center items-center h-10 pointer-events-none">
+            <div
+              className="w-6 h-6 rounded-full border-2 border-primary border-t-transparent"
+              style={{ transform: `rotate(${pullY * 5.6}deg)` }}
+            />
+          </div>
+        )}
       <section className="px-4 mt-2">
         {groupedActive.length === 0 ? (
           <div className="text-center py-16 text-muted-foreground text-sm">
