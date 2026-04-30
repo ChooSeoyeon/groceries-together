@@ -37,11 +37,11 @@ export function useShoppingList() {
     .filter(i => !i.inCart)
     .sort((a, b) => new Date(b.checkedAt ?? 0).getTime() - new Date(a.checkedAt ?? 0).getTime());
 
-  const addItem = useMutation({
+  const addItemMutation = useMutation({
     mutationFn: (args: { name: string; store: Store; quantity: number; unit: string; urgency: Urgency; memo?: string }) =>
       api.items.create(args),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
-  }).mutate;
+  });
 
   const checkItem = useMutation({
     mutationFn: (id: string) => api.items.update(id, { inCart: false }),
@@ -70,8 +70,9 @@ export function useShoppingList() {
     items,
     activeItems,
     historyItems,
+    isAdding: addItemMutation.isPending,
     addItem: (name: string, store: Store, quantity: number, unit: string, urgency: Urgency, memo?: string) =>
-      addItem({ name, store, quantity, unit, urgency, memo }),
+      addItemMutation.mutateAsync({ name, store, quantity, unit, urgency, memo }),
     checkItem: (id: string) => checkItem(id),
     uncheckItem: (id: string) => uncheckItem(id),
     deleteItem: (id: string) => deleteItem(id),

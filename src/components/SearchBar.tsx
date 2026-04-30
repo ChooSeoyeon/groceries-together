@@ -8,7 +8,7 @@ import { Store, Urgency } from '@/types/shopping';
 interface SearchBarProps {
   items: ShoppingItem[];
   onUncheck: (id: string) => void;
-  onAdd: (name: string, store: Store, quantity: number, unit: string, urgency: Urgency, memo?: string) => void;
+  onAdd: (name: string, store: Store, quantity: number, unit: string, urgency: Urgency, memo?: string) => Promise<unknown>;
   onLongPress: (item: ShoppingItem) => void;
 }
 
@@ -38,8 +38,8 @@ export function SearchBar({ items, onUncheck, onAdd, onLongPress }: SearchBarPro
     setAddDrawerOpen(true);
   };
 
-  const handleAdd = (name: string, store: Store, quantity: number, unit: string, urgency: Urgency, memo?: string) => {
-    onAdd(name, store, quantity, unit, urgency, memo);
+  const handleAdd = async (name: string, store: Store, quantity: number, unit: string, urgency: Urgency, memo?: string) => {
+    await onAdd(name, store, quantity, unit, urgency, memo);
     setQuery('');
     setFocused(false);
     setAddDrawerOpen(false);

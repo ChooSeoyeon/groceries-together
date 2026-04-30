@@ -7,13 +7,14 @@ import { useState, useEffect } from 'react';
 import { Plus, Minus, X } from 'lucide-react';
 
 interface AddItemDrawerProps {
-  onAdd: (name: string, store: Store, quantity: number, unit: string, urgency: 'urgent' | 'relaxed', memo?: string) => void;
+  onAdd: (name: string, store: Store, quantity: number, unit: string, urgency: 'urgent' | 'relaxed', memo?: string) => Promise<unknown>;
+  isAdding?: boolean;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   prefillName?: string;
 }
 
-export function AddItemDrawer({ onAdd, open: controlledOpen, onOpenChange, prefillName }: AddItemDrawerProps) {
+export function AddItemDrawer({ onAdd, isAdding = false, open: controlledOpen, onOpenChange, prefillName }: AddItemDrawerProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -32,9 +33,9 @@ export function AddItemDrawer({ onAdd, open: controlledOpen, onOpenChange, prefi
     }
   }, [open, prefillName]);
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (!name.trim()) return;
-    onAdd(name.trim(), store, quantity, unit, urgency, memo.trim() || undefined);
+    await onAdd(name.trim(), store, quantity, unit, urgency, memo.trim() || undefined);
     setName('');
     setQuantity(1);
     setUnit('개');
@@ -161,9 +162,9 @@ export function AddItemDrawer({ onAdd, open: controlledOpen, onOpenChange, prefi
           onClick={handleAdd}
           onPointerDown={(e) => e.stopPropagation()}
           className="w-full rounded-full h-9 text-sm mt-3"
-          disabled={!name.trim()}
+          disabled={!name.trim() || isAdding}
         >
-          추가하기
+          {isAdding ? '추가 중...' : '추가하기'}
         </Button>
       </DrawerContent>
     </Drawer>
